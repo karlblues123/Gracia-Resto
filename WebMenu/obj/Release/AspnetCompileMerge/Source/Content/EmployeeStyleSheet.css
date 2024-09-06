@@ -1,0 +1,75 @@
+﻿/*
+    Green - #05de2f
+    Red - #f41516
+    Blue - #0a91ea
+    Yellow - #d39c1b
+*/
+
+.btn-green, .btn-green:active, .btn-green:hover{
+    color:#05de2f !important;
+    background-color:none !important;
+}
+
+.btn-red, .btn-red:active, .btn-red:hover{
+    color:#f41516 !important;
+    background-color:none !important;
+}
+
+.btn-green-fill, .btn-green-fill:active, .btn-green-fill:hover{
+    color:white !important;
+    background-color:#05de2f !important;
+}
+
+.btn-yellow, .btn-yellow:active, .btn-yellow:hover, .btn-yellow:focus{
+    color:#d39c1b !important;
+    background-color:none !important;
+}
+
+.btn-yellow-fill, .btn-yellow-fill:active, .btn-yellow-fill:hover{
+    color:black !important;
+    background-color:#d39c1b !important;
+}
+
+.btn-red-fill, .btn-red-fill:active, .btn-red-fill:hover {
+    color:white !important;
+    background-color:#f41516 !important;
+}
+
+.btn-blue-fill, .btn-blue-fill:active, .btn-blue-fill:hover {
+    color:white !important;
+    background-color:#0a91ea !important;
+}
+
+.btn-blue ,.nav-link.btn-blue {
+    color:#0a91ea !important;
+    background-color:none;
+}
+
+.nav-link.btn-blue.active {
+    color:white !important;
+    background-color:#0a91ea !important;
+}
+
+.bg-blue {
+    background-color:#0a91ea !important;
+}
+
+.bg-red {
+    background-color:#f41516 !important;
+}
+
+.bg-green {
+    background-color:#05de2f !important;
+}
+
+.bg-yellow {
+    background-color:#d39c1b !important;
+}
+
+.toast-success {
+    background-color:#05de2f !important;
+}
+
+.toast-warning{
+    background-color:#d39c1b !important;
+}

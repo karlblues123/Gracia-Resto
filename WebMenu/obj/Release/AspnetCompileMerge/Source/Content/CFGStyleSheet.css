@@ -1,0 +1,51 @@
+﻿/*
+
+office-green: #006b0eff;
+chili-red: #e3170aff;
+silver: #c0c0c0ff;
+black: #000103ff;
+snow: #fffbfcff;
+
+*/
+
+@font-face {
+    font-family: "Tw Cen MT";
+    src: url('Tw Cen MT.ttf') format('truetype');
+}
+
+body {
+    font-family:"Tw Cen MT",Arial;
+    color:#000103;
+    background-color:#fffbfc;
+    
+}
+
+.btn-green, .btn-green:active {
+    color:#006b0e !important;
+    background-color:#fffbfc !important;
+}
+
+.btn-green-fill, .btn-green-fill:active {
+    color:#fffbfc !important;
+    background-color:#006b0e !important;
+}
+
+.dropdown-item:active {
+    color:#000103;
+    background-color:#fffbfc;
+}
+
+.dropdown-item:hover {
+    color:#000103;
+    background-color:#fffbfc;
+}
+
+.btn-red, .btn-red:active {
+    background-color:#e3170a !important;
+    color:#fffbfc !important;
+}
+
+.dish-card {
+    width: 800px;
+    border-color:#000103;
+}

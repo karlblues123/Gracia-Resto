@@ -1,0 +1,90 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="GraciaResto.Main" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Gracia Restaurant</title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="Content/toastr.css" rel="stylesheet" />
+    <link href="Content/jquery-ui.css" rel="stylesheet" />
+    <link href="Content/CFGStyleSheet.css" rel="stylesheet" />
+
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+    <script src="Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="Scripts/toastr.min.js"></script>
+    <%--<script src="Scripts/bootstrap.min.js"></script>--%>
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <script type="text/javascript">
+        function showToastSuccess(msg, contentMessage) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "progressBar": true,
+                "preventDuplicates": false,
+                "positionClass": "toast-top-right",
+                "showDuration": "400",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.success(msg, contentMessage)
+        }
+
+        function showToastError(msg, contentMessage) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "progressBar": true,
+                "preventDuplicates": false,
+                "positionClass": "toast-top-right",
+                "showDuration": "400",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.error(msg, contentMessage)
+        }
+
+        function showToastWarning(msg, contentMessage) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "progressBar": true,
+                "preventDuplicates": false,
+                "positionClass": "toast-top-right",
+                "showDuration": "400",
+                "hideDuration": "1000",
+                "timeOut": "3000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr.warning(msg, contentMessage)
+        }
+    </script>
+    <form id="form1" runat="server">
+        <div class="container-fluid" style="padding-left:0;padding-right:0;margin-left:0px;margin-right:0px;">
+            <asp:ScriptManager runat="server" ID="ScriptManager1"></asp:ScriptManager>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
