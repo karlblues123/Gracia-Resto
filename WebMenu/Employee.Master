@@ -93,7 +93,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="nav-links">
                     <div class="navbar-nav">
-                        <a class="nav-link" href="CustomerLogs.aspx">Customers</a>
                         <%-- Cafe Dropdown --%>
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cafe</a>

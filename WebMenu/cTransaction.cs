@@ -216,7 +216,7 @@ namespace GraciaResto
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@SALESCODE", code);
-                    cmd.Parameters.AddWithValue("@CUSTOMERCODE", customer);
+                    cmd.Parameters.AddWithValue("@CUSTOMER", customer);
                     cmd.Parameters.AddWithValue("@TOTALAMOUNT", total);
                     cmd.Parameters.AddWithValue("@AMOUNTTENDERED", tendered);
                     cmd.Parameters.AddWithValue("@DATE", date);
@@ -310,8 +310,8 @@ namespace GraciaResto
         #endregion
 
         #region UPDATE
-        public bool UPDATE_SALES_HDR(string code, decimal tendered, string waiter, string room, decimal tip, string receiver, int status, 
-            string remarks, string username)
+        public bool UPDATE_SALES_HDR(string code, string customer, decimal tendered, string waiter, string room, decimal tip, string receiver, 
+            int status, string remarks, string username)
         {
             bool didUpdate = false;
 
@@ -322,6 +322,7 @@ namespace GraciaResto
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@SALESCODE", code);
+                    cmd.Parameters.AddWithValue("CUSTOMER", customer);
                     cmd.Parameters.AddWithValue("@AMOUNTTENDERED", tendered);
                     cmd.Parameters.AddWithValue("@WAITERNAME", waiter);
                     cmd.Parameters.AddWithValue("@ROOM", room);

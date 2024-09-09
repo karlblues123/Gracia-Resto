@@ -29,7 +29,7 @@ namespace GraciaResto
             //Load the report
             this.oReportDocument.Load(Server.MapPath("~/Reports/repCustomerSummary.rpt"));
 
-            this.oReportDocument.Database.Tables[0].SetDataSource(this.oMaster.GET_CUSTOMER_BY_CODE(guest));
+            //this.oReportDocument.Database.Tables[0].SetDataSource(this.oMaster.GET_CUSTOMER_BY_CODE(guest));
 
             //this.oReportDocument.Subreports[0].Database.Tables[0].SetDataSource(this.oTransaction.GET_CUSTOMER_RENTALS(guest));
             //this.oReportDocument.Subreports[1].Database.Tables[0].SetDataSource(this.oTransaction.GET_CUSTOMER_RESERVATION(guest));

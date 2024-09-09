@@ -32,7 +32,7 @@
                 <%-- Logs GridView --%>
                 <asp:GridView runat="server" ID="gvLogs" CssClass="table table-responsive" AutoGenerateColumns="false" DataKeyNames="VoidCode">
                     <Columns>
-                        <asp:BoundField DataField="CustomerName" HeaderText="Customer"/>
+                        <asp:BoundField DataField="Customer" HeaderText="Customer"/>
                         <asp:BoundField DataField="Date" HeaderText="Date" />
                         <asp:BoundField DataField="Username" HeaderText="Employee" />
                         <asp:TemplateField>

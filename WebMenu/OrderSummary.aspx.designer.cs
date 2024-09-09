@@ -40,13 +40,13 @@ namespace GraciaResto {
         protected global::System.Web.UI.WebControls.GridView gvOrder;
         
         /// <summary>
-        /// txtCustomerCode control.
+        /// txtCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCustomerCode;
+        protected global::System.Web.UI.WebControls.TextBox txtCustomer;
         
         /// <summary>
         /// txtCustomerLocation control.

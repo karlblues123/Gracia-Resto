@@ -69,16 +69,16 @@
                             <div class="row m-2 m-md-2">
                                 <div class="col-6 offset-3">
                                     <div class="form-floating">
-                                        <%-- Customer Code --%>
-                                        <asp:TextBox runat="server" ID="txtCustomerCode" CssClass="form-control fs-1" AutoCompleteType="Disabled"></asp:TextBox>
-                                        <label for="<%=txtCustomerCode.ClientID %>">Code</label>
+                                        <%-- Customer --%>
+                                        <asp:TextBox runat="server" ID="txtCustomer" CssClass="form-control fs-1" AutoCompleteType="Disabled"></asp:TextBox>
+                                        <label for="<%=txtCustomer.ClientID %>">Name</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row m-2 m-md-2">
                                 <div class="col-6 offset-3">
                                     <div class="form-floating">
-                                        <%-- Customer Location --%>
+                                        <%-- Location --%>
                                         <asp:TextBox runat="server" ID="txtCustomerLocation" CssClass="form-control fs-1" ReadOnly="true"></asp:TextBox>
                                         <label for="<%=txtCustomerLocation.ClientID%>">Location</label>
                                     </div>

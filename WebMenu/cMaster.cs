@@ -10,11 +10,6 @@ namespace GraciaResto
     public class cMaster : cBase
     {
 
-        internal DataTable GET_CUSTOMERS()
-        {
-            return queryCommandDT_StoredProc("[Master].[spGET_CUSTOMERS]");
-        }
-        
         #region "TABLES MODULE"
         public DataTable GET_TABLE_LISTS()
         {
@@ -53,7 +48,7 @@ namespace GraciaResto
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@GUESTCODE", _guc);
+                    cmd.Parameters.AddWithValue("@CUSTOMER", _guc);
                     cmd.Parameters.AddWithValue("@NOTES", _notes);
                     cmd.Parameters.AddWithValue("@TABLENUMBER", _tableNumber);
                     cmd.Parameters.AddWithValue("@ISDINING", _isDining);
@@ -291,50 +286,6 @@ namespace GraciaResto
             }
         }
 
-        #endregion
-
-        #region CUSTOMER
-        internal DataTable GET_CUSTOMER_BY_CODE(string code)
-        {
-            DataTable dt = new DataTable();
-
-            using (SqlConnection cn = new SqlConnection(cs))
-            {
-
-                using (SqlCommand cmd = new SqlCommand("[Master].[spGET_CUSTOMER_BY_CODE]", cn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@GUESTCODE", code);
-
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    da.Fill(dt);
-                }
-            }
-
-            return dt;
-        }
-
-        internal void INSERT_CUSTOMER(string code, string lastname, string firstname, DateTime birthdate, char gender)
-        {
-            using (SqlConnection cn = new SqlConnection(cs))
-            {
-                using (SqlCommand cmd = new SqlCommand("[Master].[spINSERT_CUSTOMER]", cn))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    cmd.Parameters.AddWithValue("@GUESTCODE", code);
-                    cmd.Parameters.AddWithValue("@LASTNAME", lastname);
-                    cmd.Parameters.AddWithValue("@FIRSTNAME", firstname);
-                    cmd.Parameters.AddWithValue("@BIRTHDATE", birthdate);
-                    cmd.Parameters.AddWithValue("@GENDER", gender);
-
-                    cn.Open();
-
-                    cmd.ExecuteNonQuery();
-
-                }
-            }
-        }
         #endregion
     }
 }

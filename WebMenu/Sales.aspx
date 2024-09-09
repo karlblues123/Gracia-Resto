@@ -40,29 +40,11 @@
                             <div class="card" style="max-height:28vh;">
                                 <div class="card-body">
                                     <div class="row mb-1">
-                                        <div class="col-2">
-                                            <div class="input-group">
-                                                <div class="form-floating">
-                                                    <%-- Customer Code --%>
-                                                    <asp:TextBox runat="server" ID="txtCustomerCode" CssClass="form-control" 
-                                                        AutoCompleteType="Disabled"></asp:TextBox>
-                                                    <label for="<%=txtCustomerCode.ClientID%>">Code</label>
-                                                </div>
-                                                <button type="button" class="btn btn-green-fill" data-bs-toggle="modal" data-bs-target="#customer-modal"><span class="fa fa-search"></span></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
+                                        <%-- Customer --%>
+                                        <div class="col-8">
                                             <div class="form-floating">
-                                                <%-- First Name --%>
-                                                <asp:TextBox runat="server" ID="txtFirstName" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
-                                                <label for="<%=txtFirstName.ClientID %>">First Name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-3">
-                                            <div class="form-floating">
-                                                <%-- Last Name --%>
-                                                <asp:TextBox runat="server" ID="txtLastName" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
-                                                <label for="<%=txtLastName.ClientID %>">Last Name</label>
+                                                <asp:TextBox runat="server" ID="txtCustomer" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
+                                                <label for="<%=txtCustomer.ClientID%>">Customer</label>
                                             </div>
                                         </div>
                                         <%-- Date --%>
@@ -257,46 +239,6 @@
                             </div>
                         </div>
                     </div>
-                    <%-- Customer modal --%>
-                    <div class="modal fade" tabindex="-1" id="customer-modal" aria-labelledby="CustomerModal">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <input type="text" id="customer-search" class="form-control" placeholder="Search" autocomplete="off" /> 
-                                </div>
-                                <div class="modal-body overflow-y-auto" style="max-height:75vh;">
-                                    <asp:GridView runat="server" ID="gvCustomers" CssClass="table table-responsive" AutoGenerateColumns="false" 
-                                        DataKeyNames="GuestCode">
-                                        <Columns>
-                                            <%-- Code --%>
-                                            <asp:BoundField DataField="GuestCode" HeaderText="Code" ItemStyle-Width="20%" />
-                                            <%-- Name --%>
-                                            <asp:TemplateField ItemStyle-Width="20%" HeaderText="Name">
-                                                <ItemTemplate>
-                                                    <%#Eval("LastName")%>, <%#Eval("FirstName")%>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <%-- Birthdate --%>
-                                            <asp:BoundField DataField="Birthdate" HeaderText="Birthdate" DataFormatString="{0:MM/dd/yyyy}" ItemStyle-Width="20%" />
-                                            <%-- Gender --%>
-                                            <asp:BoundField DataField="Gender" HeaderText="Gender" ItemStyle-Width="10%" />
-                                            <%-- Date Recorded --%>
-                                            <asp:BoundField DataField="DI" HeaderText="Date Recorded" ItemStyle-Width="20%" />
-                                            <asp:TemplateField>
-                                                <ItemTemplate>
-                                                    <%-- Select Button --%>
-                                                    <asp:LinkButton runat="server" ID="btnSelectCustomer" CssClass="btn btn-green-fill" OnClick="btnSelectCustomer_Click"><span class="fa fa-check"></span></asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-dark float-end" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <%-- History Tab --%>
                 <div class="tab-pane fade" id="history-pane">
@@ -325,11 +267,7 @@
                                                 DataKeyNames="SalesCode">
                                                 <Columns>
                                                     <%-- Customer Name --%>
-                                                    <asp:TemplateField HeaderText="Customer">
-                                                        <ItemTemplate>
-                                                            <%#Eval("LastName")%>, <%#Eval("FirstName")%>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
+                                                    <asp:BoundField DataField="Customer" HeaderText="Customer" />
                                                     <%-- Date of Sale --%>
                                                     <asp:BoundField DataField="Date" DataFormatString="{0:MM/dd/yyyy}" />
                                                     <%-- Total --%>
@@ -429,14 +367,6 @@
             $('[id*=sales-search]').off().on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $('[id*=gvSales] tr').filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-
-            //Search function for Customers
-            $('[id*=customer-search]').off().on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $('[id*=gvCustomers] tr').filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });

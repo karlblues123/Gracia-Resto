@@ -47,15 +47,28 @@ namespace GraciaResto
             return total;
         }
 
+        private void UPDATE_SELECTED_TABLE()
+        {
+            DataRow selected_table = this.oMaster.GET_TABLE_BY_CODE(Session["Location"].ToString()).Rows[0];
+
+            this.oMaster.UPDATE_TABLE_STATUS(this.txtCustomer.Text, string.Empty, Convert.ToInt32(selected_table["TableNumber"].ToString()), 
+                true, Request.Cookies["User"].Values["Username"].ToString());
+        }
+
+        private bool CHECK_SELECTED_TABLE()
+        {
+            DataRow selected_table = this.oMaster.GET_TABLE_BY_CODE(Session["Location"].ToString()).Rows[0];
+
+            return char.Equals(char.Parse(selected_table["TableStatusCode"].ToString()),'A');
+        }
+
         private bool INSERT_NEW_ORDER()
         {
             bool newOrder = false;
             string location = this.PARSE_LOCATION(Session["Location"].ToString());
-            if (Session["CustomerOrder"] != null && !string.IsNullOrWhiteSpace(this.txtCustomerCode.Text) && !string.IsNullOrWhiteSpace(location))
+            if (Session["CustomerOrder"] != null && !string.IsNullOrWhiteSpace(location))
             {
-                DataTable guest = this.oMaster.GET_CUSTOMER_BY_CODE(this.txtCustomerCode.Text);
-
-                if (guest.Rows.Count > 0)
+                if (this.CHECK_SELECTED_TABLE())
                 {
                     //Copy the data to a new data table
                     DataTable order = (Session["CustomerOrder"] as DataTable).Copy();
@@ -64,7 +77,7 @@ namespace GraciaResto
                     {
                         //Get the necessary data
                         string code = oSys.GET_SERIES_NUMBER("S");
-                        string customer = this.txtCustomerCode.Text;
+                        string customer = this.txtCustomer.Text;
 
                         decimal total = 0.00m;
                         SqlDateTime date = DateTime.Now;
@@ -96,7 +109,8 @@ namespace GraciaResto
 
                         newOrder = true;
 
-                        this.txtCustomerCode.CssClass = "form-control";
+                        //Update table to Dine
+                        this.UPDATE_SELECTED_TABLE();
                     }
                     else
                     {
@@ -106,16 +120,9 @@ namespace GraciaResto
                 }
                 else
                 {
-                    this.txtCustomerCode.CssClass += " is-invalid";
-                    this.lblErrorAlert.Text = "Code is invalid. Please see a Frontdesk personnel for help.";
+                    this.lblErrorAlert.Text = "Table is unavailable. Please scan a QR code off a different table.";
                     this.lblErrorAlert.Visible = true;
                 }
-            }
-            else if (string.IsNullOrWhiteSpace(this.txtCustomerCode.Text))
-            {
-                this.txtCustomerCode.CssClass += " is-invalid";
-                this.lblErrorAlert.Text = "No code given. Please provide your code.";
-                this.lblErrorAlert.Visible = true;
             }
             else if (string.IsNullOrWhiteSpace(location))
             {

@@ -276,6 +276,7 @@
             </FooterTemplate>
         </asp:Repeater>
         <asp:Label runat="server" ID="lblNoTableAlert" CssClass="alert alert-danger position-fixed bottom-0 end-0 text-center" style="width:98vw;" Visible="false">No table found. Please scan the QR code to get the table.</asp:Label>
+        <asp:Label runat="server" ID="lblTableTakenAlert" CssClass="alert alert-warning position-fixed bottom-0 end-0 text-center" style="width:98vw;" Visible="false">Table is occupied. If you are reordering, please input the exact name you used before (case sensitive).</asp:Label>
         <%-- View Order Shortcut Button --%>
         <asp:LinkButton runat="server" ID="btnView" CssClass="btn btn-green-fill position-fixed bottom-0 end-0 mb-5 me-5" OnClick="lnkViewOrder_Click" 
             style="--bs-btn-padding-y: 1.25rem; --bs-btn-padding-x: 2.5rem; --bs-btn-font-size: 2.5rem;">

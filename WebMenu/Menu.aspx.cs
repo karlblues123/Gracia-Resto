@@ -18,8 +18,15 @@ namespace GraciaResto
             //Get the location from the Query String
             if (!string.IsNullOrWhiteSpace(Request.QueryString["Location"]))
             {
-                if(this.VALIDATE_LOCATION(Request.QueryString["Location"]))
-                    Session["Location"] = Request.QueryString["Location"];
+                if (this.VALIDATE_LOCATION(Request.QueryString["Location"]))
+                {
+                    if (this.CHECK_TABLE(Request.QueryString["Location"]))
+                    {
+                        Session["Location"] = Request.QueryString["Location"];
+                    }
+                    else
+                        this.lblTableTakenAlert.Visible = true;
+                }
                 else
                     this.lblNoTableAlert.Visible = true;
             }
@@ -78,6 +85,13 @@ namespace GraciaResto
                 is_valid = this.oMaster.GET_TABLE_BY_CODE(location).Rows.Count > 0;
 
             return is_valid;
+        }
+
+        private bool CHECK_TABLE(string location)
+        {
+            DataRow selected_table = this.oMaster.GET_TABLE_BY_CODE(location).Rows[0];
+
+            return char.Equals(char.Parse(selected_table["TableStatusCode"].ToString()), 'A');
         }
 
         private void INSERT_DISH(int count)

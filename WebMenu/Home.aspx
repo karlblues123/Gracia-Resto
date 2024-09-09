@@ -24,12 +24,8 @@
                         <asp:GridView runat="server" ID="gvTodaySales" CssClass="table table-responsive" AutoGenerateColumns="false" DataKeyNames="SalesCode" 
                             EmptyDataText="No sales found." EmptyDataRowStyle-CssClass="text-center">
                             <Columns>
-                                <%-- Customer Name --%>
-                                <asp:TemplateField HeaderText="Customer">
-                                    <ItemTemplate>
-                                        <%#Eval("FirstName")%> <%#Eval("LastName")%>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                                <%-- Customer --%>
+                                <asp:BoundField DataField="Customer" HeaderText="Customer" />
                                 <%-- Total --%>
                                 <asp:BoundField DataField="TotalAmount" HeaderText="Total" />
                                 <%-- View Button --%>
@@ -79,11 +75,7 @@
                                         T - <%#Eval("TableNumber")%>
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Customer">
-                                    <ItemTemplate>
-                                        <%#Eval("FirstName")%> <%#Eval("LastName") %>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                                <asp:BoundField DataField="Customer" HeaderText="Customer" />
                             </Columns>
                         </asp:GridView>
                     </div>

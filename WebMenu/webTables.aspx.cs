@@ -24,7 +24,6 @@ namespace GraciaResto
                     Response.Redirect("Login.aspx");
 
                 LoadRepeaterData();
-                this.DISPLAY_GUESTS();
             }
         }
 
@@ -191,70 +190,8 @@ namespace GraciaResto
         }
 
         #region "Local Functions"
-        private int GET_VALID_GUESTCODE()
-        {
-            Random rng = new Random();
-            int code = -1;
-            while (code <= 1)
-            {
-                code = rng.Next(1, 999999);
-                if (this.oMaster.GET_CUSTOMER_BY_CODE(code.ToString()).Rows.Count > 0)
-                    code = -1;
-            }
-            return code;
-        }
 
-        private void DISPLAY_GUESTS()
-        {
-            this.gvGuests.DataSource = this.oMaster.GET_CUSTOMERS();
-            this.gvGuests.DataBind();
-        }
-
-        private void DISPLAY_SELECTED_GUEST(string code)
-        {
-            //Get the selected Customer
-            DataRow guest = this.oMaster.GET_CUSTOMER_BY_CODE(code).Rows[0];
-
-            if(guest[0] != null)
-            {
-                //Display the Customer information
-                this.txtGuestCode.Text = guest["GuestCode"].ToString();
-                this.txtLastName.Text = guest["LastName"].ToString();
-                this.txtFirstName.Text = guest["FirstName"].ToString();
-                this.txtBirthdate.Text = DateTime.Parse(guest["Birthdate"].ToString()).ToString("yyyy-MM-dd");
-                this.rblGender.SelectedValue = guest["Gender"].ToString();
-            }
-        }
-
-        private bool VALIDATE_CUSTOMER_FORM()
-        {
-            bool is_valid = true;
-
-            if (string.IsNullOrWhiteSpace(this.txtLastName.Text))
-                is_valid = false;
-            if (string.IsNullOrWhiteSpace(this.txtFirstName.Text))
-                is_valid = false;
-            if (string.IsNullOrWhiteSpace(this.txtBirthdate.Text))
-                is_valid = false;
-            if (this.rblGender.SelectedIndex == -1)
-                is_valid = false;
-
-            return is_valid;
-        }
-
-        private void INSERT_CUSTOMER()
-        {
-            //Get and Parse the input
-            DateTime birthdate = DateTime.Parse(this.txtBirthdate.Text);
-            char gender = char.Parse(this.rblGender.SelectedValue.ToString());
-            string code = this.GET_VALID_GUESTCODE().ToString();
-
-            //Insert
-            this.oMaster.INSERT_CUSTOMER(code, this.txtLastName.Text, this.txtFirstName.Text,birthdate, gender);
-
-            //Set the Guest code
-            this.txtGuestCode.Text = code;
-        }
+       
 
         private bool VALIDATE_TABLE_FORM()
         {
@@ -351,55 +288,6 @@ namespace GraciaResto
 
 
         #region EVENTS
-        protected void lnkNewCustomer_Click(object sender, EventArgs e)
-        {
-            if (this.VALIDATE_CUSTOMER_FORM())
-            {
-                bool _flgTableStatus;
-                if (radDine.Checked)
-                { _flgTableStatus = true; }
-                else
-                { _flgTableStatus = false; }
-
-                if (string.IsNullOrWhiteSpace(this.txtGuestCode.Text))
-                    this.INSERT_CUSTOMER();
-                this.oMaster.UPDATE_TABLE_STATUS(this.txtGuestCode.Text, this.txtNotes.Text, Convert.ToInt32(hfTableNumber.Value), _flgTableStatus, Request.Cookies["User"].Values["Username"].ToString());
-
-
-
-                //Refresh table list here
-                //DataTable dt = oMaster.GET_TABLE_LISTS();
-                //rpt.DataSource = dt;
-                //rpt.DataBind();
-
-                LoadRepeaterData();
-
-                //Clear input
-                this.txtFirstName.Text = "";
-                txtNotes.Text = "";
-                //txtNumberOfGuest.Text = "1";
-
-                //Display the Toast and hide the modal
-                ScriptManager.RegisterStartupScript(this, this.Page.GetType(), "Success", "$('#modalCustomerEntry').hide();$('.modal-backdrop').remove();$('body').removeClass('modal-open');$('body').css('overflow-y', 'auto');showToastSuccess('" + lblSendRoom.Text + " statsus change to occupied.');", true);
-            }
-
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, this.Page.GetType(), "Error", "$('#modalCustomerEntry').hide();$('.modal-backdrop').remove();$('body').removeClass('modal-open');$('body').css('overflow-y', 'auto');showToastError('Input required!');", true);
-            }
-            //Display the Toast and hide the modal
-            
-        }
-
-        protected void btnSelect_Click(object sender, EventArgs e)
-        {
-            var selEdit = (Control)sender;
-            GridViewRow r = (GridViewRow)selEdit.NamingContainer;
-
-            this.DISPLAY_SELECTED_GUEST(this.gvGuests.DataKeys[r.RowIndex].Value.ToString());
-            this.upGuestList.Update();
-        }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (this.VALIDATE_TABLE_FORM())
@@ -421,8 +309,35 @@ namespace GraciaResto
             this.upTableInformation.Update();
             ScriptManager.RegisterStartupScript(this, this.GetType(), "msg", "<script>$('#table-modal').modal('show');</script>", false);
         }
-        #endregion
 
+        protected void lnkSubmit_Click(object sender, EventArgs e)
+        {
+            bool _flgTableStatus;
+            if (radDine.Checked)
+            { _flgTableStatus = true; }
+            else
+            { _flgTableStatus = false; }
+
+            this.oMaster.UPDATE_TABLE_STATUS(this.txtCustomer.Text, this.txtNotes.Text, Convert.ToInt32(hfTableNumber.Value), _flgTableStatus, Request.Cookies["User"].Values["Username"].ToString());
+
+
+
+            //Refresh table list here
+            //DataTable dt = oMaster.GET_TABLE_LISTS();
+            //rpt.DataSource = dt;
+            //rpt.DataBind();
+
+            LoadRepeaterData();
+
+            //Clear input
+            this.txtCustomer.Text = string.Empty;
+            txtNotes.Text = string.Empty;
+            //txtNumberOfGuest.Text = "1";
+
+            //Display the Toast and hide the modal
+            ScriptManager.RegisterStartupScript(this, this.Page.GetType(), "Success", "$('#modalCustomerEntry').hide();$('.modal-backdrop').remove();$('body').removeClass('modal-open');$('body').css('overflow-y', 'auto');showToastSuccess('" + lblSendRoom.Text + " statsus change to occupied.');", true);
+        }
+        #endregion
 
     }
 }

@@ -88,8 +88,9 @@
                                             <div class="card-header"> 
                                                 <div class="row">
                                                 <div class="col-9">
-                                                <p><span class="fa fa-user"></span> Customer Name: <b><%# Eval("FirstName") + " " + Eval("LastName")%></b></p>
-                                                <span class="fa fa-clock-o"></span> Time: <b><%# Eval("DI") %></b>
+                                                <p><span class="fa fa-user"></span> Customer Name: <b><%# Eval("Customer")%></b></p>
+                                                <span class="fa fa-clock-o"></span> Time: <b><%# Eval("DI") %></b><br />
+                                                <span class="fa fa-location-arrow"></span> Table: <b><%#Eval("Room") %></b>
                                                 <asp:HiddenField runat="server" ID="hfSalesCode" Value='<%# Eval("SalesCode") %>' />
                                                     </div>
                                                 <div class="col-3">
@@ -145,14 +146,15 @@
                                             <div class="card-header bg-yellow"> 
                                                 <div class="row">
                                                 <div class="col-9">
-                                                <p><span class="fa fa-user"></span> Customer Name: <b><%# Eval("FirstName") + " " + Eval("LastName")%></b></p>
-                                                <span class="fa fa-clock-o"></span> Time: <b><%# Eval("DI") %></b>
-                                                <asp:HiddenField runat="server" ID="hfSalesCode" Value='<%# Eval("SalesCode") %>' />
-                                                    </div>
+                                                    <p><span class="fa fa-user"></span> Customer Name: <b><%# Eval("Customer")%></b></p>
+                                                    <span class="fa fa-clock-o"></span> Time: <b><%# Eval("DI") %></b><br />
+                                                    <span class="fa fa-location-arrow"></span> Table: <b><%#Eval("Room") %></b>
+                                                    <asp:HiddenField runat="server" ID="hfSalesCode" Value='<%# Eval("SalesCode") %>' />
+                                                </div>
                                                 <div class="col-3">
                                                     <asp:LinkButton runat="server" ID="lnkComplete" CssClass="btn btn-sm btn-green-fill" CommandName="COMPLETE"><span class="fa fa-check-square"></span> Ready</asp:LinkButton>
                                                 </div>
-                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="card-body">

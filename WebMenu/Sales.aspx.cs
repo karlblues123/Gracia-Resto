@@ -42,7 +42,6 @@ namespace GraciaResto
                         this.DISPLAY_ORDER(code);
                     }
                 }
-                this.DISPLAY_CUSTOMERS();
             }
             this.DISPLAY_LIST_DISH();
             this.DISPLAY_LIST_SALES(this.ddStatusFilter.SelectedValue);
@@ -93,12 +92,6 @@ namespace GraciaResto
             this.gvDishes.DataBind();
         }
 
-        private void DISPLAY_CUSTOMERS()
-        {
-            this.gvCustomers.DataSource = this.oMaster.GET_CUSTOMERS();
-            this.gvCustomers.DataBind();
-        }
-
         private void DISPLAY_DISH_LINE()
         {
             //Display the Dish Line data from Session
@@ -135,9 +128,7 @@ namespace GraciaResto
                 decimal.TryParse(details["TotalAmount"].ToString(), out total);
                 lblChangeAmount.Text = "Change: " + (decimal.Parse(details["AmountTendered"].ToString()) - total).ToString();
             }
-            this.txtCustomerCode.Text = details["CustomerCode"].ToString();
-            this.txtFirstName.Text = details["FirstName"].ToString();
-            this.txtLastName.Text = details["LastName"].ToString();
+            this.txtCustomer.Text = details["Customer"].ToString();
             this.txtDate.Text = details["Date"].ToString();
             this.txtWaiterName.Text = details["WaiterName"].ToString();
             this.txtRoom.Text = details["Room"].ToString();
@@ -153,7 +144,7 @@ namespace GraciaResto
                 this.txtRemarks.Text = void_sale["Reason"].ToString();
 
                 this.txtAmountTendered.Enabled = false;
-                this.txtCustomerCode.Enabled = false;
+                this.txtCustomer.Enabled = false;
                 this.txtDate.Enabled = false;
                 this.txtWaiterName.Enabled = false;
                 this.txtRoom.Enabled = false;
@@ -170,7 +161,7 @@ namespace GraciaResto
             {
                 this.ddSaleStatus.Enabled = true;
                 this.txtAmountTendered.Enabled = true;
-                this.txtCustomerCode.Enabled = true;
+                this.txtCustomer.Enabled = true;
                 this.txtDate.Enabled = true;
                 this.txtWaiterName.Enabled = true;
                 this.txtRoom.Enabled = true;
@@ -365,9 +356,7 @@ namespace GraciaResto
         private void CLEAR()
         {
             this.hiddenSelectedSale.Value = string.Empty;
-            this.txtCustomerCode.Text = string.Empty;
-            this.txtFirstName.Text = string.Empty;
-            this.txtLastName.Text = string.Empty;
+            this.txtCustomer.Text = string.Empty;
             this.txtAmountTendered.Text = 0.00m.ToString();
             this.txtDate.Text = string.Empty;
             this.txtReceiverName.Text = string.Empty;
@@ -385,7 +374,7 @@ namespace GraciaResto
 
             //Enable buttons in case they were disabled when viewing Void Sales
             this.txtAmountTendered.Enabled = true;
-            this.txtCustomerCode.Enabled = true;
+            this.txtCustomer.Enabled = true;
             this.txtDate.Enabled = true;
             this.txtWaiterName.Enabled = true;
             this.txtRoom.Enabled = true;
@@ -398,14 +387,14 @@ namespace GraciaResto
             this.gvDishLine.Enabled = true;
             this.gvDishes.Enabled = true;
 
-            this.txtCustomerCode.CssClass = "form-control";
+            this.txtCustomer.CssClass = "form-control";
             this.txtRemarks.CssClass = "form-control";
         }
 
         private void INSERT_NEW_SALE()
         {
             //Get the user input for Customer
-            string customer = this.txtCustomerCode.Text;
+            string customer = this.txtCustomer.Text;
 
             //Check if there is a Dish Line table and selected Customer
             if (Session["Order"] != null && !string.IsNullOrWhiteSpace(customer))
@@ -442,17 +431,13 @@ namespace GraciaResto
 
                 this.CLEAR();
             }
-            else
-            {
-                Show_Error_Toast("Empty Customer Name. Please provide the customer name.");
-                this.txtCustomerCode.CssClass += " is-invalid";
-            }
         }
 
         private void UPDATE_SALE_HDR()
         {
             //Get the data for Update
             string code = this.hiddenSelectedSale.Value;
+            string customer = this.txtCustomer.Text;
             decimal tendered = 0.00m;
             decimal.TryParse(this.txtAmountTendered.Text, out tendered);
             string waiter = this.txtWaiterName.Text == string.Empty ? "None Specified" : this.txtWaiterName.Text;
@@ -470,7 +455,7 @@ namespace GraciaResto
                 if (!string.IsNullOrWhiteSpace(remarks))
                 {
                     //Update the database
-                    this.oTransaction.UPDATE_SALES_HDR(code, tendered, waiter, room, tip, receiver, status, remarks, 
+                    this.oTransaction.UPDATE_SALES_HDR(code, customer,tendered, waiter, room, tip, receiver, status, remarks, 
                         Request.Cookies["User"].Values["Username"].ToString());
 
                     Show_Message_Toast("Updated " + code);
@@ -508,21 +493,6 @@ namespace GraciaResto
                     Show_Error_Toast("Empty Remarks. Please provide a reason to void this sales.");
                     this.txtRemarks.CssClass += " is-invalid";
                 }   
-            }
-        }
-
-        private void SELECT_CUSTOMER(string code)
-        {
-            //Get the Customer data from the database
-            DataRow customer = this.oMaster.GET_CUSTOMER_BY_CODE(code).Rows[0];
-
-            //Check if there is a Customer
-            if (!customer.IsNull(0))
-            {
-                //Display the Customer data to the controls
-                this.txtCustomerCode.Text = customer["GuestCode"].ToString();
-                this.txtFirstName.Text = customer["FirstName"].ToString();
-                this.txtLastName.Text = customer["LastName"].ToString();
             }
         }
 
@@ -638,16 +608,6 @@ namespace GraciaResto
         protected void btnClear_Click(object sender, EventArgs e)
         {
             this.CLEAR();
-        }
-
-        protected void btnSelectCustomer_Click(object sender, EventArgs e)
-        {
-            //Get the code
-            var selEdit = (Control)sender;
-            GridViewRow r = (GridViewRow)selEdit.NamingContainer;
-            string code = this.gvCustomers.DataKeys[r.RowIndex].Value.ToString();
-
-            this.SELECT_CUSTOMER(code);
         }
 
         protected void gvDishLine_RowCreated(object sender, GridViewRowEventArgs e)

@@ -32,11 +32,7 @@
                 <%-- Logs GridView --%>
                 <asp:GridView runat="server" ID="gvLogs" CssClass="table table-responsive" AutoGenerateColumns="false" DataKeyNames="SalesCode">
                     <Columns>
-                        <asp:TemplateField HeaderText="Customer" ItemStyle-Width="20%">
-                            <ItemTemplate>
-                                <%#Eval("FirstName")%> <%#Eval("LastName")%>
-                            </ItemTemplate>
-                        </asp:TemplateField>
+                        <asp:BoundField DataField="Customer" HeaderText="Customer" ItemStyle-Width="20%" />
                         <asp:BoundField DataField="DI" HeaderText="Date and Time" ItemStyle-Width="20%" />
                         <asp:BoundField DataField="ActionMade" HeaderText="Action" ItemStyle-Width="20%" />
                         <asp:BoundField DataField="Username" HeaderText="Employee" ItemStyle-Width="20%" />

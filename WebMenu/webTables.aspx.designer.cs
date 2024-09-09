@@ -85,15 +85,6 @@ namespace GraciaResto {
         protected global::System.Web.UI.WebControls.HiddenField hfTableNumber;
         
         /// <summary>
-        /// gvGuests control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvGuests;
-        
-        /// <summary>
         /// lblTableNumberDisplay control.
         /// </summary>
         /// <remarks>
@@ -112,49 +103,13 @@ namespace GraciaResto {
         protected global::System.Web.UI.WebControls.Label lblSendRoom;
         
         /// <summary>
-        /// txtGuestCode control.
+        /// txtCustomer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGuestCode;
-        
-        /// <summary>
-        /// txtFirstName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFirstName;
-        
-        /// <summary>
-        /// txtLastName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtLastName;
-        
-        /// <summary>
-        /// txtBirthdate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBirthdate;
-        
-        /// <summary>
-        /// rblGender control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rblGender;
+        protected global::System.Web.UI.WebControls.TextBox txtCustomer;
         
         /// <summary>
         /// txtNotes control.
@@ -184,13 +139,13 @@ namespace GraciaResto {
         protected global::System.Web.UI.WebControls.RadioButton radReserve;
         
         /// <summary>
-        /// lnkNewCustomer control.
+        /// lnkSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkNewCustomer;
+        protected global::System.Web.UI.WebControls.LinkButton lnkSubmit;
         
         /// <summary>
         /// upTableInformation control.

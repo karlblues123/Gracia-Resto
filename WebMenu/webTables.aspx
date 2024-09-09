@@ -68,13 +68,10 @@
                                                                     <tr>
                                                                         <td><span class="fa fa-users"></span>Capacity:  </td>
                                                                         <td>
-                                                                    
-                                                                           <strong> <asp:Label runat="server" ID="lblTableCapacity"  Text='<%# Eval("Capacity") %>'  onkeypress="return(event.charCode == 8 || event.charCode == 0) ? null: event.charCode >= 46 && event.charCode <=57" MaxLength="2"></asp:Label></strong>
-                                                                               </td>
+                                                                            <strong> <asp:Label runat="server" ID="lblTableCapacity"  Text='<%# Eval("Capacity") %>'  onkeypress="return(event.charCode == 8 || event.charCode == 0) ? null: event.charCode >= 46 && event.charCode <=57" MaxLength="2"></asp:Label></strong>
+                                                                        </td>
                                                                     
                                                                     </tr>
-
-                                                          
                                                                     <tr>
                                                                         <td>
                                                                             <span class="fa fa-bookmark"></span>Desc: 
@@ -83,21 +80,26 @@
                                                                             <asp:Label runat="server" ID="lblTableName" Text='<%# Eval("TableName") %>'></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                            
-                                                                      <tr>
+                                                                    <tr>
                                                                         <td><span class="fa fa-location-arrow"></span>Location :</td>
                                                                         <td>
                                                                             <asp:Label runat="server" ID="lblLocation" CssClass="text-wrap" Text='<%# Eval("Location") %>'></asp:Label>
-                                                                            </td>
-
-
+                                                                        </td>
                                                                     </tr>
-                                                                        <tr>
-                                                                            <td></td>
-                                                                            <td>
-                                                                                <asp:LinkButton runat="server" CssClass="btn btn-blue-fill btn-sm form-control" ID="lnkAssignTable" CommandName="GET"><span class="fa fa-pencil-square"></span> Assign Table</asp:LinkButton>
-                                                                            </td>
-                                                                        </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <span class="fa fa-qrcode"></span>Code :
+                                                                        </td>
+                                                                        <td>
+                                                                            <%#Eval("TableCode")%>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <asp:LinkButton runat="server" CssClass="btn btn-blue-fill btn-sm form-control" ID="lnkAssignTable" CommandName="GET"><span class="fa fa-pencil-square"></span> Assign Table</asp:LinkButton>
+                                                                        </td>
+                                                                    </tr>
                                                                 </table>
 
 
@@ -137,7 +139,7 @@
 
                                                                     </tr>--%>
                                                                    <tr>
-                                                                       <td><span class="fa fa-user"></span> Customer: </td><td><asp:Label runat="server" ID="lblCustomerName" Text='<%#Eval("FirstName") + " " + Eval("LastName")%>'></asp:Label></td>
+                                                                       <td><span class="fa fa-user"></span> Customer: </td><td><asp:Label runat="server" ID="lblCustomerName" Text='<%#Eval("Customer")%>'></asp:Label></td>
                                                                  
                                                                    </tr>
                                                                    <tr>
@@ -189,7 +191,7 @@
 
                                                                     </tr>--%>
                                                                    <tr>
-                                                                       <td><span class="fa fa-user"></span> Customer: </td><td><asp:Label runat="server" ID="Label2" Text='<%#Eval("FirstName") + " " + Eval("LastName")%>'></asp:Label></td>
+                                                                       <td><span class="fa fa-user"></span> Customer: </td><td><asp:Label runat="server" ID="Label2" Text='<%#Eval("Customer")%>'></asp:Label></td>
                                                                  
                                                                    </tr>
                                                                    <tr>
@@ -251,12 +253,19 @@
                                                                             <asp:Label runat="server" ID="Label6" Text='<%# Eval("TableName") %>'></asp:Label>
                                                                         </td>
                                                                     </tr>
-                                                            
-                                                                      <tr>
+                                                                    <tr>
                                                                         <td><span class="fa fa-location-arrow"></span>Location :</td>
                                                                         <td>
                                                                             <asp:Label runat="server" ID="Label7" CssClass="text-wrap" Text='<%# Eval("Location") %>'></asp:Label>
-                                                                            </td>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <span class="fa fa-qrcode"></span>Code :
+                                                                        </td>
+                                                                        <td>
+                                                                            <%#Eval("TableCode")%>
+                                                                        </td>
                                                                     </tr>
                                                                 </table>
                                                             </div>
@@ -281,7 +290,7 @@
                         
                         <!-- ENTRY TO DINE OR RESERVE -->
                         <div class="modal fade" id="modalCustomerEntry" data-bs-backdrop="static" tabindex="-1" data-bs-keyboard="false">
-                            <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-green">
                                         <p class="h5"><span class="fa fa-users"></span> Customer Dine / Reservation Entry</p>
@@ -289,125 +298,51 @@
                                     </div>
                                     <div class="modal-body">
                                         <!--Display all Suppliers -->
-                                                <asp:UpdatePanel runat="server" ID="upGuestList" UpdateMode="Conditional" ChildrenAsTriggers="false">
-                                                    <ContentTemplate>
-                                                        <%-- Table Number Hidden Field --%>
-                                                        <asp:HiddenField runat="server" ID="hfTableNumber" />
-                                                        <div class="container-fluid">
-                                                            <div class="row">
-                                                                <div class="col-6">
-                                                                    <div class="card" style="height:40vh;">
-                                                                        <div class="card-header">
-                                                                            <div class="row">
-                                                                                <input type="text" id="guest-search" class="form-control" 
-                                                                                    placeholder="Search" />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="card-body overflow-y-auto">
-                                                                            <%-- Recorded Guest List --%>
-                                                                            <asp:GridView runat="server" ID="gvGuests" CssClass="table table-responsive" DataKeyNames="GuestCode" AutoGenerateColumns="false">
-                                                                                <Columns>
-                                                                                    <asp:TemplateField HeaderText="Name" ItemStyle-Width="20%">
-                                                                                        <ItemTemplate>
-                                                                                            <%#Eval("FirstName")%> <%#Eval("LastName")%>
-                                                                                        </ItemTemplate>
-                                                                                    </asp:TemplateField>
-                                                                                    <asp:BoundField DataField="Birthdate" HeaderText="Birthdate" 
-                                                                                        DataFormatString="{0:MM/dd/yyyy}" ItemStyle-Width="20%" />
-                                                                                    <asp:BoundField DataField="Gender" HeaderText="Gender" ItemStyle-Width="15%" />
-                                                                                    <asp:BoundField DataField="DI" HeaderText="Date Recorded" ItemStyle-Width="20%" />
-                                                                                    <asp:TemplateField ItemStyle-Width="5%">
-                                                                                        <ItemTemplate>
-                                                                                            <asp:LinkButton runat="server" ID="btnSelect" CssClass="btn btn-green-fill" OnClick="btnSelect_Click">
-                                                                                                <span class="fa fa-edit"></span>
-                                                                                            </asp:LinkButton>
-                                                                                        </ItemTemplate>
-                                                                                    </asp:TemplateField>
-                                                                                </Columns>
-                                                                            </asp:GridView>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="row">
-                                                                        <div class="col-6">Table #: <b><asp:Label runat="server" ID="lblTableNumberDisplay"></asp:Label></b></div>
-                                                                        <div class="col-6">Table Description: 
-                                                                            <asp:Label runat="server" ID="lblSendRoom"> </asp:Label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row mb-2">
-                                                                        <%-- Guest Code --%>
-                                                                        <div class="col-6">
-                                                                            <div class="form-floating">
-                                                                                <asp:TextBox runat="server" ID="txtGuestCode" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
-                                                                                <label for="<%=this.txtGuestCode.ClientID%>">Guest Code</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row mb-2">
-                                                                        <%-- First Name --%>
-                                                                        <div class="col-6">
-                                                                            <div class="form-floating">
-                                                                                <asp:TextBox runat="server" ID="txtFirstName" CssClass="form-control"
-                                                                                    AutoCompleteType="Disabled"></asp:TextBox>
-                                                                                <label for="<%=this.txtFirstName.ClientID%>" class="form-label">First Name</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <%-- Last Name --%>
-                                                                        <div class="col-6">
-                                                                            <div class="form-floating">
-                                                                                <asp:TextBox runat="server" ID="txtLastName" CssClass="form-control"
-                                                                                    AutoCompleteType="Disabled"></asp:TextBox>
-                                                                                <label for="<%=this.txtLastName%>" class="form-label">Last Name</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Guest Number -->
-                                                                    <%--<div class="mb-2">
-                                                                        <label for="txtNewCustomerAddress" class="form-label">Number of Guest</label>
-                                                                        <asp:TextBox runat="server" ID="txtNumberOfGuest" CssClass="form-control"
-                                                                            AutoCompleteType="Disabled" TextMode="Number" Text="1" onkeypress="return(event.charCode == 8 || event.charCode == 0) ? null: event.charCode >= 46 && event.charCode <=57" MaxLength="2"></asp:TextBox>
-                                                                    </div>--%>
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-6">
-                                                                            <div class="form-floating">
-                                                                                <%-- Birthdate --%>
-                                                                                <asp:TextBox runat="server" ID="txtBirthdate" CssClass="form-control" AutoCompleteType="Disabled" TextMode="Date"></asp:TextBox>
-                                                                                <label for="<%=this.txtBirthdate.ClientID%>">Birthdate</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <div class="form-floating">
-                                                                                <%-- Gender --%>
-                                                                                <asp:RadioButtonList runat="server" ID="rblGender">
-                                                                                    <asp:ListItem Value="M">Male</asp:ListItem>
-                                                                                    <asp:ListItem Value="F">Female</asp:ListItem>
-                                                                                </asp:RadioButtonList>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Notes / Remarks -->
-                                                                    <div class="row mb-2">
-                                                                        <label for="txtNotes" class="form-label">Remarks / Notes</label>
-                                                                        <asp:TextBox runat="server" ID="txtNotes" CssClass="form-control" TextMode="MultiLine" Rows="2"
-                                                                            AutoCompleteType="Disabled"></asp:TextBox>
-                                                                    </div>
-                                                                    <!-- Notes / Remarks -->
-                                                                    <div class="row mb-2">
-                                                                        <div class="col-md-2"><asp:RadioButton runat="server" GroupName="ACC" ID="radDine" Checked="true" CssClass="form-check-input" Text="Dine" /></div>
-                                                                        <div class="col-md-4"><asp:RadioButton runat="server" GroupName="ACC" ID="radReserve" CssClass="form-check-input" Text= "Reserve"/></div>
-                                                                    </div>
-                                                                </div>
+                                        <asp:UpdatePanel runat="server" ID="upGuestList" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                                            <ContentTemplate>
+                                                <%-- Table Number Hidden Field --%>
+                                                <asp:HiddenField runat="server" ID="hfTableNumber" />
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-6">Table #: <b><asp:Label runat="server" ID="lblTableNumberDisplay"></asp:Label></b></div>
+                                                        <div class="col-6">Table Description: 
+                                                            <asp:Label runat="server" ID="lblSendRoom"> </asp:Label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-2">
+                                                        <%-- Customer --%>
+                                                        <div class="col">
+                                                            <div class="form-floating">
+                                                                <asp:TextBox runat="server" ID="txtCustomer" CssClass="form-control"
+                                                                    AutoCompleteType="Disabled"></asp:TextBox>
+                                                                <label for="<%=this.txtCustomer.ClientID%>" class="form-label">Customer</label>
                                                             </div>
                                                         </div>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                                
-                                           
+                                                    </div>
+                                                    <!-- Guest Number -->
+                                                    <%--<div class="mb-2">
+                                                        <label for="txtNewCustomerAddress" class="form-label">Number of Guest</label>
+                                                        <asp:TextBox runat="server" ID="txtNumberOfGuest" CssClass="form-control"
+                                                            AutoCompleteType="Disabled" TextMode="Number" Text="1" onkeypress="return(event.charCode == 8 || event.charCode == 0) ? null: event.charCode >= 46 && event.charCode <=57" MaxLength="2"></asp:TextBox>
+                                                    </div>--%>
+                                                    <!-- Notes / Remarks -->
+                                                    <div class="row mb-2">
+                                                        <label for="txtNotes" class="form-label">Remarks / Notes</label>
+                                                        <asp:TextBox runat="server" ID="txtNotes" CssClass="form-control" TextMode="MultiLine" Rows="2"
+                                                            AutoCompleteType="Disabled"></asp:TextBox>
+                                                    </div>
+                                                    <!-- Notes / Remarks -->
+                                                    <div class="row mb-2">
+                                                        <div class="col-md-2"><asp:RadioButton runat="server" GroupName="ACC" ID="radDine" Checked="true" CssClass="form-check-input" Text="Dine" /></div>
+                                                        <div class="col-md-4"><asp:RadioButton runat="server" GroupName="ACC" ID="radReserve" CssClass="form-check-input" Text= "Reserve"/></div>
+                                                    </div>
+                                                </div>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
                                     </div>
                                     <div class="modal-footer">      
                                         <div class="justify-content-md-end">
-                                            <asp:LinkButton runat="server" ID="lnkNewCustomer" CssClass="btn btn-green-fill" OnClick="lnkNewCustomer_Click">Submit</asp:LinkButton>
+                                            <asp:LinkButton runat="server" ID="lnkSubmit" CssClass="btn btn-green-fill" OnClick="lnkSubmit_Click">Submit</asp:LinkButton>
                                         </div>            
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     </div>
@@ -431,7 +366,7 @@
                                                         Table Number: <asp:Label runat="server" ID="lblSelectedTableNumber"></asp:Label>
                                                     </div>
                                                     <%-- Name --%>
-                                                    <div class="col-4">
+                                                    <div class="col-8">
                                                         <div class="form-floating">
                                                             <asp:TextBox runat="server" ID="txtTableName" AutoCompleteType="Disabled" 
                                                                 CssClass="form-control"></asp:TextBox>
