@@ -59,7 +59,7 @@ namespace GraciaResto
         {
             DataRow selected_table = this.oMaster.GET_TABLE_BY_CODE(Session["Location"].ToString()).Rows[0];
 
-            return char.Equals(char.Parse(selected_table["TableStatusCode"].ToString()),'A');
+            return !char.Equals(char.Parse(selected_table["TableStatusCode"].ToString()),'U');
         }
 
         private bool INSERT_NEW_ORDER()
@@ -114,9 +114,9 @@ namespace GraciaResto
                     }
                     else
                     {
-                        this.lblErrorAlert.Text = "Empty Basket. Please place an item.";
-                        this.lblErrorAlert.Visible = true;
+                        this.lblErrorAlert.Text = "Empty order. Please have an item selected beforehand.";
                     }
+                
                 }
                 else
                 {

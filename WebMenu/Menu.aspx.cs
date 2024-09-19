@@ -25,7 +25,7 @@ namespace GraciaResto
                         Session["Location"] = Request.QueryString["Location"];
                     }
                     else
-                        this.lblTableTakenAlert.Visible = true;
+                        this.lblNoTableAlert.Visible = true;
                 }
                 else
                     this.lblNoTableAlert.Visible = true;
@@ -91,7 +91,7 @@ namespace GraciaResto
         {
             DataRow selected_table = this.oMaster.GET_TABLE_BY_CODE(location).Rows[0];
 
-            return char.Equals(char.Parse(selected_table["TableStatusCode"].ToString()), 'A');
+            return !char.Equals(char.Parse(selected_table["TableStatusCode"].ToString()), 'U');
         }
 
         private void INSERT_DISH(int count)

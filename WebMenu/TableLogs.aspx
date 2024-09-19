@@ -38,7 +38,7 @@
                             <asp:GridView runat="server" ID="gvAuditLogs" CssClass="table table-responsive" AutoGenerateColumns="false" DataKeyNames="ID">
                                 <Columns>
                                     <asp:BoundField DataField="TableNumber" HeaderText="Table" ItemStyle-Width="20%" />
-                                    <asp:BoundField DataField="CustomerName" HeaderText="Customer" ItemStyle-Width="20%" />
+                                    <asp:BoundField DataField="Customer" HeaderText="Customer" ItemStyle-Width="20%" />
                                     <asp:BoundField DataField="Username" HeaderText="Employee" ItemStyle-Width="20%" />
                                     <asp:BoundField DataField="TYPE" HeaderText="Action" ItemStyle-Width="20%" />
                                     <asp:BoundField DataField="DI" HeaderText="Date" ItemStyle-Width="20%" />

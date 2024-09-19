@@ -16,7 +16,7 @@
                 <%-- Logs GridView --%>
                 <asp:GridView runat="server" ID="gvLogs" CssClass="table table-responsive" AutoGenerateColumns="false" DataKeyNames="ID">
                     <Columns>
-                        <asp:BoundField DataField="CustomerName" HeaderText="Customer" />
+                        <asp:BoundField DataField="Customer" HeaderText="Customer" />
                         <asp:BoundField DataField="Username" HeaderText="Employee" />
                         <asp:BoundField DataField="ActionMade" HeaderText="Action" />
                         <asp:BoundField DataField="DI" HeaderText="Date" />

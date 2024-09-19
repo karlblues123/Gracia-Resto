@@ -20,15 +20,15 @@
                     <aside class="col-auto col-md-1 col-xl-1">
                         <ul class="list-group">
                             <li class="list-group-item border-0"> 
-                                <button class="btn btn-green-fill">
+                                <button type="button" class="btn btn-green-fill">
                                     <p class="d-xxl-inline d-none">Available</p> <span class="fa fa-thumbs-up d-xxl-none d-inline"></span> <asp:Label runat="server" ID="lnkCountAvailable" CssClass="badge bg-red"></asp:Label></button>
                             </li>
                             <li class="list-group-item border-0">
-                                <button class="btn btn-yellow-fill">
+                                <button type="button" class="btn btn-yellow-fill">
                                     <p class="d-xxl-inline d-none">Reserve</p> <span class="fa fa-book d-xxl-none d-inline"></span> <asp:Label runat="server" ID="lnkCountReserve" CssClass="badge bg-dark"></asp:Label></button>
                             </li>
                             <li class="list-group-item border-0">
-                                <button class="btn btn-secondary">
+                                <button type="button" class="btn btn-secondary">
                                     <p class="d-xxl-inline d-none">Occupied</p> <span class="fa fa-ban d-xxl-none d-inline"></span> <asp:Label runat="server" ID="lnkCountOccupied" CssClass="badge bg-red"></asp:Label></button>
                             </li>
                         </ul>
