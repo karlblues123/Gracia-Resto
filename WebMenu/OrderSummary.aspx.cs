@@ -47,14 +47,6 @@ namespace GraciaResto
             return total;
         }
 
-        private void UPDATE_SELECTED_TABLE()
-        {
-            DataRow selected_table = this.oMaster.GET_TABLE_BY_CODE(Session["Location"].ToString()).Rows[0];
-
-            this.oMaster.UPDATE_TABLE_STATUS(this.txtCustomer.Text, string.Empty, Convert.ToInt32(selected_table["TableNumber"].ToString()), 
-                true, Request.Cookies["User"].Values["Username"].ToString());
-        }
-
         private bool CHECK_SELECTED_TABLE()
         {
             DataRow selected_table = this.oMaster.GET_TABLE_BY_CODE(Session["Location"].ToString()).Rows[0];
@@ -108,9 +100,6 @@ namespace GraciaResto
                         Session.Add("SalesCode", code);
 
                         newOrder = true;
-
-                        //Update table to Dine
-                        this.UPDATE_SELECTED_TABLE();
                     }
                     else
                     {
