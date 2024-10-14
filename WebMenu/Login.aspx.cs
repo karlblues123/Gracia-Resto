@@ -37,7 +37,7 @@ namespace GraciaResto
             if (!string.IsNullOrEmpty(txtUsername.Text) && !string.IsNullOrEmpty(txtPassword.Text))
             {
                 //Check if the Username and Password match
-                if (this.oSys.VALIDATE_USER(this.txtUsername.Text, this.txtPassword.Text) > -1)
+                if (this.oSys.VALIDATE_USER(this.txtUsername.Text, this.txtPassword.Text) > 0)
                 {
                     validated = true;
 

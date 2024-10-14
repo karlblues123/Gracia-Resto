@@ -40,13 +40,13 @@ namespace GraciaResto {
         protected global::System.Web.UI.WebControls.TextBox txtDate;
         
         /// <summary>
-        /// txtRoom control.
+        /// txtLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRoom;
+        protected global::System.Web.UI.WebControls.TextBox txtLocation;
         
         /// <summary>
         /// txtWaiterName control.
@@ -65,6 +65,24 @@ namespace GraciaResto {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtReceiverName;
+        
+        /// <summary>
+        /// txtPax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPax;
+        
+        /// <summary>
+        /// txtPWDSenior control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPWDSenior;
         
         /// <summary>
         /// txtRemarks control.
@@ -112,13 +130,13 @@ namespace GraciaResto {
         protected global::System.Web.UI.WebControls.TextBox txtAmountTendered;
         
         /// <summary>
-        /// lblChangeAmount control.
+        /// txtChangeAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblChangeAmount;
+        protected global::System.Web.UI.WebControls.TextBox txtChangeAmount;
         
         /// <summary>
         /// btnClear control.

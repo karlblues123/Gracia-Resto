@@ -36,246 +36,64 @@
             <div class="d-flex dropstart"> 
                 <a class="nav-link dropdown-toggle fs-2" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><span class="fa fa-search"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item fs-2" href="#appetizer">Appetizer</a></li>
-                    <li><a class="dropdown-item fs-2" href="#soup">Soup</a></li>
-                    <li><a class="dropdown-item fs-2" href="#maindish">Main Course</a></li>
-                    <li><a class="dropdown-item fs-2" href="#rice">Rice</a></li>
-                    <li><a class="dropdown-item fs-2" href="#desserts">Desserts</a></li>
-                    <li><a class="dropdown-item fs-2" href="#beverages">Beverages</a></li>
+                    <asp:Repeater runat="server" ID="rNavigation">
+                        <ItemTemplate>
+                            <li><a class="dropdown-item fs-2" href='#<%#Eval("Description").ToString()%>'><%#Eval("Description").ToString()%></a></li>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </ul>   
             </div>
         </div>
     </nav>
     <asp:Panel runat="server" ID="pMenu" Visible="true">
-        <%-- Appetizer Repeater --%>
-        <asp:Repeater runat="server" ID="rAppetizer">
-            <HeaderTemplate>
-                <div class="d-flex flex-column align-items-lg-center align-items-md-center" id="appetizer" style="scroll-margin-top:8.5em;">
-                    <h1>Appetizers</h1>
-                    <ul class="list-group list-group-flush">
-            </HeaderTemplate>
+        <asp:Panel runat="server" ID="pNoLocationAlert" CssClass="alert alert-danger alert-dismissible sticky-md-top sticky-top w-auto" Visible="false">
+            <div class="row">
+                <div class="col">
+                    <div class="fs-4 text-center">No location found. Please scan the QR code to get the location.</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </asp:Panel>
+        <%-- Main Repeater --%>
+        <asp:Repeater runat="server" ID="rMain">
             <ItemTemplate>
-                <%-- Appetizer Select Button --%>
-                <asp:LinkButton runat="server" ID="btnAppetizer" CssClass="btn border-0 my-2" 
-                    Enabled='<%#(int)Eval("Stock") <= 0 ? false : true %>' CommandName="Display" 
-                    CommandArgument='<%#(int)Eval("Stock") <= 0 ? string.Empty : Eval("DishCode").ToString() %>' OnCommand="btnDish_Command">
-                    <div class="card dish-card mb-3">
-                        <div class="row g-0">
-                            <%-- Image --%>
-                            <div class="col-md-5 col-5 d-flex align-items-center justify-content-center <%#(int)Eval("Stock") <= 0 ? "opacity-25" : string.Empty %>">
-                                <asp:Image runat="server" CssClass="img-thumbnail border-0 object-fit-contain" ImageUrl='<%#this.GetImage(Eval("Name").ToString())%>' 
-                                    onerror='this.style.display = "none"'/>
-                            </div>
-                            <%-- Details --%>
-                            <div class="col-md-7 col-7">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-evenly">
-                                    <h2 class="card-title"><asp:Label runat="server" ID="lblDishName" Text='<%# Eval("Name").ToString() %>'></asp:Label></h2>
-                                    <p class="card-text fs-3 text-center"><asp:Label runat="server" ID="lblDishDescription" Text='<%# Eval("Description").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-3">Good for <asp:Label runat="server" ID="lblDishServing" Text='<%# Eval("Serving").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblDishPrice" Text='<%# Eval("Price").ToString() %>'></asp:Label>PHP</p>
-                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblSoldOut" Visible='<%#(int)Eval("Stock") <= 0%>'>Sold Out</asp:Label></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </asp:LinkButton>
-            </ItemTemplate>
-            <FooterTemplate>
+                <div class="d-flex flex-column align-items-lg-center align-items-md-center" id='<%#Eval("Description").ToString()%>' style="scroll-margin-top:8.5em;">
+                    <h1><%#Eval("Description").ToString()%></h1>
+                    <ul class="list-group list-group-flush">
+                        <asp:Repeater runat="server" DataSource='<%# GET_DISH_WITH_TYPE(int.Parse(Eval("ID").ToString())) %>'>
+                            <ItemTemplate>
+                                <asp:LinkButton runat="server" ID="btnDish" CssClass="btn border-0 my-2" 
+                                    Enabled='<%#(int)Eval("Stock") <= 0 ? false : true %>' CommandName="Display" 
+                                    CommandArgument='<%#(int)Eval("Stock") <= 0 ? string.Empty : Eval("DishCode").ToString() %>' OnCommand="btnDish_Command">
+                                    <div class="card dish-card mb-3">
+                                        <div class="row g-0">
+                                            <%-- Image --%>
+                                            <div class="col-md-5 col-5 d-flex align-items-center justify-content-center <%#(int)Eval("Stock") <= 0 ? "opacity-25" : string.Empty %>">
+                                                <asp:Image runat="server" CssClass="img-thumbnail border-0 object-fit-contain" ImageUrl='<%#this.GetImage(Eval("Name").ToString())%>' 
+                                                    onerror='this.style.display = "none"'/>
+                                            </div>
+                                            <%-- Details --%>
+                                            <div class="col-md-7 col-7">
+                                                <div class="card-body d-flex flex-column align-items-center justify-content-evenly">
+                                                    <h2 class="card-title"><asp:Label runat="server" ID="lblDishName" Text='<%# Eval("Name").ToString() %>'></asp:Label></h2>
+                                                    <p class="card-text fs-3 text-center"><asp:Label runat="server" ID="lblDishDescription" Text='<%# Eval("Description").ToString() %>'></asp:Label></p>
+                                                    <p class="card-text fs-3">Good for <asp:Label runat="server" ID="lblDishServing" Text='<%# Eval("Serving").ToString() %>'></asp:Label></p>
+                                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblDishPrice" Text='<%# Eval("Price").ToString() %>'></asp:Label>PHP</p>
+                                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblSoldOut" Visible='<%#(int)Eval("Stock") <= 0%>'>Sold Out</asp:Label></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:Repeater>
                     </ul>
                 </div>
-            </FooterTemplate>
-        </asp:Repeater>
-        <%-- Soup Repeater --%>
-        <asp:Repeater runat="server" ID="rSoup">
-            <HeaderTemplate>
-                <div class="d-flex flex-column align-items-lg-center align-items-md-center" id="soup" style="scroll-margin-top:8.5em;">
-                    <h1>Soup</h1>
-                    <ul class="list-group list-group-flush">
-            </HeaderTemplate>
-            <ItemTemplate>
-                <%-- Soup Select Button --%>
-                <asp:LinkButton runat="server" ID="btnSoup" CssClass="btn border-0 my-2"
-                    Enabled='<%#(int)Eval("Stock") <= 0 ? false : true %>' CommandName="Display" 
-                    CommandArgument='<%#(int)Eval("Stock") <= 0 ? string.Empty : Eval("DishCode").ToString() %>' OnCommand="btnDish_Command">
-                    <div class="card dish-card mb-3">
-                        <div class="row g-0">
-                            <%-- Image --%>
-                            <div class="col-md-5 col-5 d-flex align-items-center justify-content-center <%#(int)Eval("Stock") <= 0 ? "opacity-25" : string.Empty %>">
-                                <asp:Image runat="server" CssClass="img-thumbnail border-0 object-fit-contain" ImageUrl='<%#this.GetImage(Eval("Name").ToString())%>' 
-                                    onerror='this.style.display = "none"' />
-                            </div>
-                            <%-- Details --%>
-                            <div class="col-md-7 col-7">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-evenly">
-                                    <h2 class="card-title"><asp:Label runat="server" ID="lblDishName" Text='<%# Eval("Name").ToString() %>'></asp:Label></h2>
-                                    <p class="card-text fs-3 text-center"><asp:Label runat="server" ID="lblDishDescription" Text='<%# Eval("Description").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-3">Good for <asp:Label runat="server" ID="lblDishServing" Text='<%# Eval("Serving").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblDishPrice" Text='<%# Eval("Price").ToString() %>'></asp:Label>PHP</p>
-                                    <p class="card-text fs-4"><asp:Label runat="server" ID="lblSoldOut" Visible='<%#(int)Eval("Stock") <= 0%>'>Sold Out</asp:Label></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </asp:LinkButton>
             </ItemTemplate>
-            <FooterTemplate>
-                    </ul>
-                </div>
-            </FooterTemplate>
         </asp:Repeater>
-        <%-- Main Course Repeater --%>
-        <asp:Repeater runat="server" ID="rMainDish">
-            <HeaderTemplate>
-                <div class="d-flex flex-column align-items-lg-center align-items-md-center" id="maindish" style="scroll-margin-top:8.5em;">
-                    <h1>Main Course</h1>
-                    <ul class="list-group list-group-flush">
-            </HeaderTemplate>
-            <ItemTemplate>
-                <%-- Main Course Select Button --%>
-                <asp:LinkButton runat="server" ID="btnMainCourse" CssClass="btn border-0 my-2"
-                    Enabled='<%#(int)Eval("Stock") <= 0 ? false : true %>' CommandName="Display" 
-                    CommandArgument='<%#(int)Eval("Stock") <= 0 ? string.Empty : Eval("DishCode").ToString() %>' OnCommand="btnDish_Command">
-                    <div class="card dish-card mb-3">
-                        <div class="row g-0">
-                            <%-- Image --%>
-                            <div class="col-md-5 col-5 d-flex align-items-center justify-content-center <%#(int)Eval("Stock") <= 0 ? "opacity-25" : string.Empty %>">
-                                <asp:Image runat="server" CssClass="img-thumbnail border-0 object-fit-contain" ImageUrl='<%#this.GetImage(Eval("Name").ToString())%>' 
-                                    onerror='this.style.display = "none"' />
-                            </div>
-                            <%-- Details --%>
-                            <div class="col-md-7 col-7">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-evenly">
-                                    <h2 class="card-title"><asp:Label runat="server" ID="lblDishName" Text='<%# Eval("Name").ToString() %>'></asp:Label></h2>
-                                    <p class="card-text fs-3 text-center"><asp:Label runat="server" ID="lblDishDescription" Text='<%# Eval("Description").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-3">Good for <asp:Label runat="server" ID="lblDishServing" Text='<%# Eval("Serving").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblDishPrice" Text='<%# Eval("Price").ToString() %>'></asp:Label>PHP</p>
-                                    <p class="card-text fs-4"><asp:Label runat="server" ID="lblSoldOut" Visible='<%#(int)Eval("Stock") <= 0%>'>Sold Out</asp:Label></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </asp:LinkButton>
-            </ItemTemplate>
-            <FooterTemplate>
-                    </ul>
-                </div>
-            </FooterTemplate>
-        </asp:Repeater>
-        <%-- Rice Repeater --%>
-        <asp:Repeater runat="server" ID="rRice">
-            <HeaderTemplate>
-                <div class="d-flex flex-column align-items-lg-center align-items-md-center" id="rice" style="scroll-margin-top:8.5em;">
-                    <h1>Rice</h1>
-                    <ul class="list-group list-group-flush">
-            </HeaderTemplate>
-            <ItemTemplate>
-                <%-- Rice Select Button --%>
-                <asp:LinkButton runat="server" ID="btnRice" CssClass="btn border-0 my-2" 
-                    Enabled='<%#(int)Eval("Stock") <= 0 ? false : true %>' CommandName="Display" 
-                    CommandArgument='<%#(int)Eval("Stock") <= 0 ? string.Empty : Eval("DishCode").ToString() %>' OnCommand="btnDish_Command">
-                    <div class="card dish-card mb-3">
-                        <div class="row g-0">
-                            <%-- Appetizer Image --%>
-                            <div class="col-md-5 col-5 d-flex align-items-center justify-content-center <%#(int)Eval("Stock") <= 0 ? "opacity-25" : string.Empty %>">
-                                <asp:Image runat="server" CssClass="img-thumbnail border-0 object-fit-contain" ImageUrl='<%#this.GetImage(Eval("Name").ToString())%>' 
-                                    onerror='this.style.display = "none"' />
-                            </div>
-                            <%-- Appetizer Details Labels --%>
-                            <div class="col-md-7 col-7">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-evenly">
-                                    <h2 class="card-title"><asp:Label runat="server" ID="lblDishName" Text='<%# Eval("Name").ToString() %>'></asp:Label></h2>
-                                    <p class="card-text fs-3 text-center"><asp:Label runat="server" ID="lblDishDescription" Text='<%# Eval("Description").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-3">Good for <asp:Label runat="server" ID="lblDishServing" Text='<%# Eval("Serving").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblDishPrice" Text='<%# Eval("Price").ToString() %>'></asp:Label>PHP</p>
-                                    <p class="card-text fs-4"><asp:Label runat="server" ID="lblSoldOut" Visible='<%#(int)Eval("Stock") <= 0%>'>Sold Out</asp:Label></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </asp:LinkButton>
-            </ItemTemplate>
-            <FooterTemplate>
-                    </ul>
-                </div>
-            </FooterTemplate>
-        </asp:Repeater>
-        <%-- Desserts Repeater --%>
-        <asp:Repeater runat="server" ID="rDesserts">
-            <HeaderTemplate>
-                <div class="d-flex flex-column align-items-lg-center align-items-md-center" id="desserts" style="scroll-margin-top:8.5em;">
-                    <h1>Desserts</h1>
-                    <ul class="list-group list-group-flush">
-            </HeaderTemplate>
-            <ItemTemplate>
-                <%-- Dessert Select Button --%>
-                <asp:LinkButton runat="server" ID="btnDessert" CssClass="btn border-0 my-2" 
-                    Enabled='<%#(int)Eval("Stock") <= 0 ? false : true %>' CommandName="Display" 
-                    CommandArgument='<%#(int)Eval("Stock") <= 0 ? string.Empty : Eval("DishCode").ToString() %>' OnCommand="btnDish_Command">
-                    <div class="card dish-card mb-3">
-                        <div class="row g-0">
-                            <%-- Image --%>
-                            <div class="col-md-5 col-5 d-flex align-items-center justify-content-center <%#(int)Eval("Stock") <= 0 ? "opacity-25" : string.Empty %>">
-                                <asp:Image runat="server" CssClass="img-thumbnail border-0 object-fit-contain" ImageUrl='<%#this.GetImage(Eval("Name").ToString())%>' 
-                                    onerror='this.style.display = "none"' />
-                            </div>
-                            <%-- Details --%>
-                            <div class="col-md-7 col-7">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-evenly">
-                                    <h2 class="card-title"><asp:Label runat="server" ID="lblDishName" Text='<%# Eval("Name").ToString() %>'></asp:Label></h2>
-                                    <p class="card-text fs-3 text-center"><asp:Label runat="server" ID="lblDishDescription" Text='<%# Eval("Description").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-3">Good for <asp:Label runat="server" ID="lblDishServing" Text='<%# Eval("Serving").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblDishPrice" Text='<%# Eval("Price").ToString() %>'></asp:Label>PHP</p>
-                                    <p class="card-text fs-4"><asp:Label runat="server" ID="lblSoldOut" Visible='<%#(int)Eval("Stock") <= 0%>'>Sold Out</asp:Label></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </asp:LinkButton>
-            </ItemTemplate>
-            <FooterTemplate>
-                    </ul>
-                </div>
-            </FooterTemplate>
-        </asp:Repeater>
-        <%-- Beverages Repeater --%>
-        <asp:Repeater runat="server" ID="rBeverages">
-            <HeaderTemplate>
-                <div class="d-flex flex-column align-items-lg-center align-items-md-center" id="beverages" style="scroll-margin-top:8.5em;">
-                    <h1>Beverages</h1>
-                    <ul class="list-group list-group-flush">
-            </HeaderTemplate>
-            <ItemTemplate>
-                <%-- Beverage Select Button --%>
-                <asp:LinkButton runat="server" ID="btnBeverage" CssClass="btn border-0 my-2" 
-                    Enabled='<%#(int)Eval("Stock") <= 0 ? false : true %>' CommandName="Display" 
-                    CommandArgument='<%#(int)Eval("Stock") <= 0 ? string.Empty : Eval("DishCode").ToString() %>' OnCommand="btnDish_Command">
-                    <div class="card dish-card mb-3">
-                        <div class="row g-0">
-                            <%-- Beverage Image --%>
-                            <div class="col-md-5 col-5 d-flex align-items-center justify-content-center  <%#(int)Eval("Stock") <= 0 ? "opacity-25" : string.Empty %>">
-                                <asp:Image runat="server" CssClass="img-thumbnail border-0 object-fit-contain" ImageUrl='<%#this.GetImage(Eval("Name").ToString())%>' 
-                                    onerror='this.style.display = "none"' />
-                            </div>
-                            <%-- Beverage Details Labels --%>
-                            <div class="col-md-7 col-7">
-                                <div class="card-body d-flex flex-column align-items-center justify-content-evenly">
-                                    <h2 class="card-title"><asp:Label runat="server" ID="lblDishName" Text='<%# Eval("Name").ToString() %>'></asp:Label></h2>
-                                    <p class="card-text fs-3 text-center"><asp:Label runat="server" ID="lblDishDescription" Text='<%# Eval("Description").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-3">Good for <asp:Label runat="server" ID="lblDishServing" Text='<%# Eval("Serving").ToString() %>'></asp:Label></p>
-                                    <p class="card-text fs-2"><asp:Label runat="server" ID="lblDishPrice" Text='<%# Eval("Price").ToString() %>'></asp:Label>PHP</p>
-                                    <p class="card-text fs-4"><asp:Label runat="server" ID="lblSoldOut" Visible='<%#(int)Eval("Stock") <= 0%>'>Sold Out</asp:Label></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </asp:LinkButton>
-            </ItemTemplate>
-            <FooterTemplate>
-                    </ul>
-                </div>
-            </FooterTemplate>
-        </asp:Repeater>
-        <asp:Label runat="server" ID="lblNoTableAlert" CssClass="alert alert-danger position-fixed bottom-0 end-0 text-center" style="width:98vw;" Visible="false">No table found. Please scan the QR code to get the table.</asp:Label>
+        <asp:Panel runat="server" ID="pIsClosed" CssClass="text-center position-absolute top-50 start-50 translate-middle fw-bold" Visible="false">
+            <p class="fs-1">Gracia ni Sr. Pedro Restaurant is now closed.<br />Try again tomorrow.<br />It is open from 6:00am to 10:00pm</p>
+        </asp:Panel>
         <%-- View Order Shortcut Button --%>
         <asp:LinkButton runat="server" ID="btnView" CssClass="btn btn-green-fill position-fixed bottom-0 end-0 mb-5 me-5" OnClick="lnkViewOrder_Click" 
             style="--bs-btn-padding-y: 1.25rem; --bs-btn-padding-x: 2.5rem; --bs-btn-font-size: 2.5rem;">

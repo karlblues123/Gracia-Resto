@@ -206,7 +206,7 @@ namespace GraciaResto
 
         #region INSERT FUNCTIONS
         public bool INSERT_NEW_SALE(string code, string customer, decimal total, decimal tendered, SqlDateTime date, string waiter, string room, 
-            DataTable data, string username)
+            int pax, int pwd_senior, DataTable data, string username)
         {
             bool didInsert = false;
             using (SqlConnection cn = new SqlConnection(cs))
@@ -222,6 +222,8 @@ namespace GraciaResto
                     cmd.Parameters.AddWithValue("@DATE", date);
                     cmd.Parameters.AddWithValue("@WAITERNAME", waiter);
                     cmd.Parameters.AddWithValue("@ROOM", room);
+                    cmd.Parameters.AddWithValue("@PAX", pax);
+                    cmd.Parameters.AddWithValue("@PWDSENIOR", pwd_senior);
                     cmd.Parameters.AddWithValue("@LINETABLE", data);
                     cmd.Parameters.AddWithValue("@USERNAME", username);
 
@@ -311,7 +313,7 @@ namespace GraciaResto
 
         #region UPDATE
         public bool UPDATE_SALES_HDR(string code, string customer, decimal tendered, string waiter, string room, decimal tip, string receiver, 
-            int status, string remarks, string username)
+            int status, int pax, int pwd_senior, string remarks, string username)
         {
             bool didUpdate = false;
 
@@ -329,6 +331,8 @@ namespace GraciaResto
                     cmd.Parameters.AddWithValue("@TIPAMOUNT", tip);
                     cmd.Parameters.AddWithValue("RECEIVERNAME", receiver);
                     cmd.Parameters.AddWithValue("@STATUS", status);
+                    cmd.Parameters.AddWithValue("@PAX", pax);
+                    cmd.Parameters.AddWithValue("@PWDSENIOR", pwd_senior);
                     cmd.Parameters.AddWithValue("@REMARKS", remarks);
                     cmd.Parameters.AddWithValue("@USERNAME", username);
 

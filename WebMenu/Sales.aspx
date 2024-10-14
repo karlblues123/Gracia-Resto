@@ -56,8 +56,8 @@
                                         <%-- Room --%>
                                         <div class="col-4">
                                             <div class="form-floating">
-                                                <asp:TextBox runat="server" ID="txtRoom" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
-                                                <label for="<%=txtRoom.ClientID %>">Room</label>
+                                                <asp:TextBox runat="server" ID="txtLocation" CssClass="form-control" AutoCompleteType="Disabled"></asp:TextBox>
+                                                <label for="<%=txtLocation.ClientID %>">Location</label>
                                             </div>
                                         </div>
                                         <%-- Waiter Name --%>
@@ -76,8 +76,25 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <%-- Pax --%>
+                                        <div class="col-2">
+                                            <div class="form-floating">
+                                                <asp:TextBox runat="server" ID="txtPax" CssClass="form-control" 
+                                                    AutoCompleteType="Disabled" TextMode="Number"></asp:TextBox>
+                                                <label for="<%=txtPax.ClientID %>">Total Pax</label>
+                                            </div>
+                                        </div>
+                                        <%-- Senior Citizen and PWD --%>
+                                        <div class="col-2">
+                                            <div class="form-floating">
+                                                <asp:TextBox runat="server" ID="txtPWDSenior" CssClass="form-control" 
+                                                    AutoCompleteType="Disabled" TextMode="Number" OnTextChanged="txtSeniorPWD_TextChanged" 
+                                                    AutoPostBack="true"></asp:TextBox>
+                                                <label for="<%=txtPWDSenior.ClientID %>">Senior Citizens & PWD</label>
+                                            </div>
+                                        </div>
                                         <%-- Sales Remarks --%>
-                                        <div class="col-8">
+                                        <div class="col-4">
                                             <div class="form-floating">
                                                 <asp:TextBox runat="server" ID="txtRemarks" CssClass="form-control" 
                                                     AutoCompleteType="Disabled" TextMode="MultiLine"></asp:TextBox>
@@ -85,7 +102,7 @@
                                             </div>
                                         </div>
                                         <%-- Sales Tips --%>
-                                        <div class="col-4">
+                                        <div class="col-2">
                                             <div class="form-floating">
                                                 <asp:TextBox runat="server" ID="txtTips" CssClass="form-control" 
                                                     AutoCompleteType="Disabled" TextMode="Number"></asp:TextBox>
@@ -133,16 +150,6 @@
                                                         TextMode="Number" AutoCompleteType="Disabled" CssClass="form-control"></asp:TextBox>
                                                 </EditItemTemplate>
                                             </asp:TemplateField>
-                                            <%-- Dish Discount --%>
-                                            <asp:TemplateField HeaderText="Discount">
-                                                <ItemTemplate>
-                                                    <asp:Label runat="server" ID="lblDiscount" Text='<%#Eval("Discount")%>'></asp:Label>
-                                                </ItemTemplate>
-                                                <EditItemTemplate>
-                                                    <asp:TextBox runat="server" ID="txtDiscount" Text='<%#Eval("Discount") %>' 
-                                                        TextMode="Number" AutoCompleteType="Disabled" CssClass="form-control"></asp:TextBox>
-                                                </EditItemTemplate>
-                                            </asp:TemplateField>
                                             <%-- Dish Total --%>
                                             <asp:TemplateField HeaderText="Total">
                                                 <ItemTemplate>
@@ -179,13 +186,15 @@
                                         <div class="col-2 offset-6">
                                             <div class="form-floating">
                                                 <asp:TextBox runat="server" ID="txtAmountTendered" CssClass="form-control" AutoCompleteType="Disabled" TextMode="Number">0.00</asp:TextBox>
-                                                <label for="<%=txtAmountTendered.ClientID %>" class="d-none d-xxl-inline">Amount Tendered</label>
+                                                <label for="<%=txtAmountTendered.ClientID %>">Amount Tendered</label>
                                             </div>
                                         </div>
-                                        <%-- Total Amount --%>
-                                        <div class="col-2 d-flex flex-column">
-                                            
-                                            <asp:Label runat="server" ID="lblChangeAmount" CssClass="card-text">Change: 0.00</asp:Label>
+                                        <%-- Change Amount --%>
+                                        <div class="col-2">
+                                            <div class="form-floating">
+                                                <asp:TextBox runat="server" ID="txtChangeAmount" CssClass="form-control" ReadOnly="true"></asp:TextBox>
+                                                <label for="<%=txtChangeAmount.ClientID%>">Change</label>
+                                            </div>
                                         </div>
                                         <%-- Save --%>
                                         <div class="col-2">

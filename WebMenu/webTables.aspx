@@ -144,15 +144,15 @@
                                                                    </tr>
                                                                    <tr>
                                                                     <td>Number of Guest:</td> 
-                                                                       <td><asp:Label runat="server" ID="lblGuestNumber" Text=''></asp:Label></td>
+                                                                       <td><asp:Label runat="server" ID="lblGuestNumber" Text='<%#Eval("NumOfGuests")%>'></asp:Label></td>
                                                             
                                                                    </tr>
                                                                    <tr>
-                                                                       <td><span class="fa fa-clock-o"></span> Date|Time</td>
-                                                                       <td><asp:Label runat="server" ID="lblTimeOccupied" CssClass="text-wrap" Text='<%# Eval("LastUpdate") %>'></asp:Label></td>
+                                                                       <td><span class="fa fa-clock-o"></span> Date & Time</td>
+                                                                       <td><asp:Label runat="server" ID="lblTimeOccupied" CssClass="text-wrap" Text='<%#Eval("LastUpdate")%>'></asp:Label></td>
                                                                    </tr>
                                                                    <tr>
-                                                                       <td>Notes:</td><td><asp:Label runat="server" ID="lblNotes" CssClass="text-wrap" Text=''></asp:Label></td>
+                                                                       <td>Notes:</td><td><asp:Label runat="server" ID="lblNotes" CssClass="text-wrap" Text='<%#Eval("Notes")%>'></asp:Label></td>
                                                                    </tr>
                                                                    <tr>
                                                                         <tr>
@@ -195,14 +195,14 @@
                                                                  
                                                                    </tr>
                                                                    <tr>
-                                                                    <td>Number of Guest: </td><td><asp:Label runat="server" ID="Label3" Text=''></asp:Label></td>
+                                                                    <td>Number of Guest: </td><td><asp:Label runat="server" ID="Label3" Text='<%#Eval("NumOfGuests")%>'></asp:Label></td>
                                                           
                                                                    </tr>
                                                                    <tr>
-                                                                       <td><span class="fa fa-clock-o"></span> Date|Time</td><td><asp:Label runat="server" ID="Label1" CssClass="text-wrap" Text='<%# Eval("LastUpdate") %>'></asp:Label></td>
+                                                                       <td><span class="fa fa-clock-o"></span> Date & Time</td><td><asp:Label runat="server" ID="Label1" CssClass="text-wrap" Text='<%# Eval("LastUpdate") %>'></asp:Label></td>
                                                                    </tr>
                                                                    <tr>
-                                                                       <td>Notes:</td><td><asp:Label runat="server" ID="Label5" CssClass="text-wrap" Text=''></asp:Label></td>
+                                                                       <td>Notes:</td><td><asp:Label runat="server" ID="Label5" CssClass="text-wrap" Text='<%#Eval("Notes")%>'></asp:Label></td>
                                                                    </tr>
 
                                                                      <tr>
@@ -320,18 +320,18 @@
                                                         </div>
                                                     </div>
                                                     <!-- Guest Number -->
-                                                    <%--<div class="mb-2">
+                                                    <div class="mb-2">
                                                         <label for="txtNewCustomerAddress" class="form-label">Number of Guest</label>
                                                         <asp:TextBox runat="server" ID="txtNumberOfGuest" CssClass="form-control"
                                                             AutoCompleteType="Disabled" TextMode="Number" Text="1" onkeypress="return(event.charCode == 8 || event.charCode == 0) ? null: event.charCode >= 46 && event.charCode <=57" MaxLength="2"></asp:TextBox>
-                                                    </div>--%>
+                                                    </div>
                                                     <!-- Notes / Remarks -->
                                                     <div class="row mb-2">
                                                         <label for="txtNotes" class="form-label">Remarks / Notes</label>
                                                         <asp:TextBox runat="server" ID="txtNotes" CssClass="form-control" TextMode="MultiLine" Rows="2"
                                                             AutoCompleteType="Disabled"></asp:TextBox>
                                                     </div>
-                                                    <!-- Notes / Remarks -->
+                                                    <!-- Buttons -->
                                                     <div class="row mb-2">
                                                         <div class="col-md-2"><asp:RadioButton runat="server" GroupName="ACC" ID="radDine" Checked="true" CssClass="form-check-input" Text="Dine" /></div>
                                                         <div class="col-md-4"><asp:RadioButton runat="server" GroupName="ACC" ID="radReserve" CssClass="form-check-input" Text= "Reserve"/></div>

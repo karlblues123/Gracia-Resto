@@ -17,6 +17,8 @@ namespace GraciaResto
         private cSystem oSys = new cSystem();
         private cMaster oMaster = new cMaster();
         private ReportDocument oReportDocument = new ReportDocument();
+        private static decimal PWD_SENIOR_DISCOUNT = 0.2m;
+        private static decimal VAT = 1.12m;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -52,7 +54,11 @@ namespace GraciaResto
         private decimal CALCULAT_TOTAL(DataTable data)
         {
             decimal total = 0.00m;
-            
+            int pax = 0, seniorsPWD = 0;
+            int.TryParse(this.txtPax.Text, out pax);
+            if (pax == 0)
+                pax = 1;
+            int.TryParse(this.txtPWDSenior.Text,out seniorsPWD);
             foreach (DataRow row in data.Rows)
             {
                 if (row["Total"] != null)
@@ -60,6 +66,9 @@ namespace GraciaResto
                     total += decimal.Parse(row["Total"].ToString());
                 }
             }
+
+            //Apply the discount
+            total = total - (((total / pax) * seniorsPWD / VAT) * PWD_SENIOR_DISCOUNT);
 
             return total;
         }
@@ -126,15 +135,16 @@ namespace GraciaResto
             {
                 decimal total;
                 decimal.TryParse(details["TotalAmount"].ToString(), out total);
-                lblChangeAmount.Text = "Change: " + (decimal.Parse(details["AmountTendered"].ToString()) - total).ToString();
+                this.txtChangeAmount.Text = "Change: " + (decimal.Parse(details["AmountTendered"].ToString()) - total).ToString();
             }
             this.txtCustomer.Text = details["Customer"].ToString();
             this.txtDate.Text = details["Date"].ToString();
             this.txtWaiterName.Text = details["WaiterName"].ToString();
-            this.txtRoom.Text = details["Room"].ToString();
+            this.txtLocation.Text = details["Room"].ToString();
             this.txtReceiverName.Text = details["ReceiverName"].ToString();
             this.txtDate.Text = DateTime.Parse(details["Date"].ToString()).ToString("yyyy-MM-dd");
             this.txtTips.Text = details["TipAmount"].ToString();
+            this.txtPax.Text = details["NumOfGuest"].ToString();
             this.ddSaleStatus.SelectedValue = details["Status"].ToString();
 
             if (int.Parse(details["Status"].ToString()) == 4)
@@ -147,10 +157,11 @@ namespace GraciaResto
                 this.txtCustomer.Enabled = false;
                 this.txtDate.Enabled = false;
                 this.txtWaiterName.Enabled = false;
-                this.txtRoom.Enabled = false;
+                this.txtLocation.Enabled = false;
                 this.txtReceiverName.Enabled = false;
                 this.txtDate.Enabled = false;
                 this.txtTips.Enabled = false;
+                this.txtPax.Enabled = false;
                 this.btnSave.Enabled = false;
                 this.ddSaleStatus.Enabled = false;
                 this.txtRemarks.Enabled = false;
@@ -164,10 +175,11 @@ namespace GraciaResto
                 this.txtCustomer.Enabled = true;
                 this.txtDate.Enabled = true;
                 this.txtWaiterName.Enabled = true;
-                this.txtRoom.Enabled = true;
+                this.txtLocation.Enabled = true;
                 this.txtReceiverName.Enabled = true;
                 this.txtDate.Enabled = true;
                 this.txtTips.Enabled = true;
+                this.txtPax.Enabled = true;
                 this.btnSave.Enabled = true;
                 this.ddSaleStatus.Enabled = true;
                 this.txtRemarks.Enabled = true;
@@ -277,15 +289,15 @@ namespace GraciaResto
         {
             //Get the user input
             string qty_string = (this.gvDishLine.Rows[index].FindControl("txtQuantity") as TextBox).Text;
-            string dis_string = (this.gvDishLine.Rows[index].FindControl("txtDiscount") as TextBox).Text;
+            //string dis_string = (this.gvDishLine.Rows[index].FindControl("txtDiscount") as TextBox).Text;
             string remarks = (this.gvDishLine.Rows[index].FindControl("txtLineRemarks") as TextBox).Text;
 
             //Check the user input
-            if (!string.IsNullOrWhiteSpace(qty_string) && !string.IsNullOrWhiteSpace(dis_string))
+            if (!string.IsNullOrWhiteSpace(qty_string))
             {
                 //Parse the user input
                 int qty = int.Parse((this.gvDishLine.Rows[index].FindControl("txtQuantity") as TextBox).Text);
-                decimal discount = decimal.Parse((this.gvDishLine.Rows[index].FindControl("txtDiscount") as TextBox).Text);
+                //decimal discount = decimal.Parse((this.gvDishLine.Rows[index].FindControl("txtDiscount") as TextBox).Text);
 
                 //Check if this is an existing Sale
                 if (string.IsNullOrWhiteSpace(this.hiddenSelectedSale.Value))
@@ -294,7 +306,7 @@ namespace GraciaResto
                     DataRow dish = (Session["Order"] as DataTable).Rows[index];
 
                     dish["Quantity"] = qty;
-                    dish["Discount"] = discount;
+                    //dish["Discount"] = discount;
                 }
                 else
                 {
@@ -302,7 +314,7 @@ namespace GraciaResto
                     if (!string.IsNullOrWhiteSpace(remarks))
                     {
                         this.oTransaction.UPDATE_SINGLE_SALES_LINE(int.Parse(this.gvDishLine.DataKeys[index].Values[0].ToString()),
-                            this.gvDishLine.DataKeys[index].Values[1].ToString(), this.hiddenSelectedSale.Value.ToString(), qty, discount, 
+                            this.gvDishLine.DataKeys[index].Values[1].ToString(), this.hiddenSelectedSale.Value.ToString(), qty, 0.00m, 
                             remarks, Request.Cookies["User"].Values["Username"].ToString());
                         this.txtRemarks.CssClass = "form-control";
                     }
@@ -360,11 +372,12 @@ namespace GraciaResto
             this.txtAmountTendered.Text = 0.00m.ToString();
             this.txtDate.Text = string.Empty;
             this.txtReceiverName.Text = string.Empty;
-            this.txtRoom.Text = string.Empty;
+            this.txtLocation.Text = string.Empty;
             this.txtWaiterName.Text = string.Empty;
             this.txtRemarks.Text = string.Empty;
             this.txtTips.Text = string.Empty;
-            this.lblChangeAmount.Text = "Total: 0.00";
+            this.txtPax.Text = string.Empty;
+            this.txtChangeAmount.Text = string.Empty;
             this.gvDishLine.DataSource = null;
             this.gvDishLine.DataBind();
             Session.Remove("Order");
@@ -377,7 +390,7 @@ namespace GraciaResto
             this.txtCustomer.Enabled = true;
             this.txtDate.Enabled = true;
             this.txtWaiterName.Enabled = true;
-            this.txtRoom.Enabled = true;
+            this.txtLocation.Enabled = true;
             this.txtReceiverName.Enabled = true;
             this.txtDate.Enabled = true;
             this.txtTips.Enabled = true;
@@ -402,6 +415,9 @@ namespace GraciaResto
                 //Get the data for Insert
                 DataTable data = Session["Order"] as DataTable;
                 string code = this.oSys.GET_SERIES_NUMBER("S");
+                int pax = int.Parse(this.txtPax.Text);
+                int pwd_senior = 0;
+                int.TryParse(this.txtPWDSenior.Text, out pwd_senior);
                 decimal total = 0.00m;
                 data.Columns.Remove("ID");
                 data.Columns.Add("SalesCode").SetOrdinal(0);
@@ -420,10 +436,10 @@ namespace GraciaResto
                 decimal.TryParse(this.txtAmountTendered.Text, out tendered);
                 SqlDateTime date = this.txtDate.Text == string.Empty ? DateTime.Now : SqlDateTime.Parse(this.txtDate.Text);
                 string waiter = this.txtWaiterName.Text == string.Empty ? "None Specified" : this.txtWaiterName.Text;
-                string room = this.txtRoom.Text == string.Empty ? "None Specified" : this.txtRoom.Text;
+                string room = this.txtLocation.Text == string.Empty ? "None Specified" : this.txtLocation.Text;
 
                 //Update the database
-                this.oTransaction.INSERT_NEW_SALE(code, customer, total, tendered, date, waiter, room, data, Request.Cookies["User"].Values["Username"].ToString());
+                this.oTransaction.INSERT_NEW_SALE(code, customer, total, tendered, date, waiter, room, pax, pwd_senior, data, Request.Cookies["User"].Values["Username"].ToString());
 
 
                 //Display a success toast
@@ -441,11 +457,16 @@ namespace GraciaResto
             decimal tendered = 0.00m;
             decimal.TryParse(this.txtAmountTendered.Text, out tendered);
             string waiter = this.txtWaiterName.Text == string.Empty ? "None Specified" : this.txtWaiterName.Text;
-            string room = this.txtRoom.Text == string.Empty ? "None Specified" : this.txtRoom.Text;
+            string room = this.txtLocation.Text == string.Empty ? "None Specified" : this.txtLocation.Text;
             decimal tip = 0.00m;
             decimal.TryParse(this.txtTips.Text, out tip);
             string receiver = this.txtReceiverName.Text == string.Empty ? "None Specified" : this.txtReceiverName.Text;
             int status = int.Parse(this.ddSaleStatus.SelectedValue);
+            int pax = int.Parse(this.txtPax.Text);
+            if (pax <= 0)
+                pax = 1;
+            int pwd_senior = 0;
+            int.TryParse(this.txtPWDSenior.Text, out pwd_senior);
             string remarks = string.Empty;
             if(!string.IsNullOrEmpty(this.txtRemarks.Text))
                 remarks = this.txtRemarks.Text;
@@ -455,7 +476,7 @@ namespace GraciaResto
                 if (!string.IsNullOrWhiteSpace(remarks))
                 {
                     //Update the database
-                    this.oTransaction.UPDATE_SALES_HDR(code, customer,tendered, waiter, room, tip, receiver, status, remarks, 
+                    this.oTransaction.UPDATE_SALES_HDR(code, customer,tendered, waiter, room, tip, receiver, status, pax, pwd_senior, remarks, 
                         Request.Cookies["User"].Values["Username"].ToString());
 
                     Show_Message_Toast("Updated " + code);
@@ -625,6 +646,17 @@ namespace GraciaResto
         {
             if (this.VALIDATE_REPORT_INPUT())
                 this.DISPLAY_REPORT();
+        }
+
+        protected void txtSeniorPWD_TextChanged(object sender, EventArgs e)
+        {
+            if(this.gvDishLine.FooterRow != null)
+            {
+                Label total = (Label)this.gvDishLine.FooterRow.FindControl("lblTotalAmount");
+                if (total != null && Session["Order"] != null)
+                    total.Text = this.CALCULAT_TOTAL(Session["Order"] as DataTable).ToString("N2");
+            }
+            
         }
         #endregion
 

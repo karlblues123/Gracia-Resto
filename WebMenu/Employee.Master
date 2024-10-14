@@ -95,7 +95,7 @@
                     <div class="navbar-nav">
                         <%-- Cafe Dropdown --%>
                         <div class="dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cafe</a>
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Restaurant</a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <%-- Table Assignment link --%>

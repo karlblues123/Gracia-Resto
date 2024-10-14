@@ -40,7 +40,7 @@ namespace GraciaResto
             return dt;
         }
 
-        public void UPDATE_TABLE_STATUS(string _guc, string _notes, int _tableNumber, bool _isDining, string username)
+        public void UPDATE_TABLE_STATUS(string customer, int pax, string notes, int _tableNumber, bool _isDining, string username)
         {
             using (SqlConnection cn = new SqlConnection(cs))
             {
@@ -48,8 +48,9 @@ namespace GraciaResto
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@CUSTOMER", _guc);
-                    cmd.Parameters.AddWithValue("@NOTES", _notes);
+                    cmd.Parameters.AddWithValue("@CUSTOMER", customer);
+                    cmd.Parameters.AddWithValue("@PAX", pax);
+                    cmd.Parameters.AddWithValue("@NOTES", notes);
                     cmd.Parameters.AddWithValue("@TABLENUMBER", _tableNumber);
                     cmd.Parameters.AddWithValue("@ISDINING", _isDining);
                     cmd.Parameters.AddWithValue("@USERNAME", username);

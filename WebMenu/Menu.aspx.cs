@@ -15,42 +15,40 @@ namespace GraciaResto
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Get the location from the Query String
-            if (!string.IsNullOrWhiteSpace(Request.QueryString["Location"]))
+            DateTime today = DateTime.Now;
+
+            if (today.Hour >= 6 && today.Hour < 22)
             {
-                if (this.VALIDATE_LOCATION(Request.QueryString["Location"]))
+                //Get the location from the Query String
+                if (!string.IsNullOrWhiteSpace(Request.QueryString["Location"]))
                 {
-                    if (this.CHECK_TABLE(Request.QueryString["Location"]))
+                    if (this.VALIDATE_LOCATION(Request.QueryString["Location"]))
                     {
-                        Session["Location"] = Request.QueryString["Location"];
+                        if (this.CHECK_TABLE(Request.QueryString["Location"]))
+                        {
+                            Session["Location"] = Request.QueryString["Location"];
+                        }
+                        else
+                            this.pNoLocationAlert.Visible = true;
                     }
                     else
-                        this.lblNoTableAlert.Visible = true;
+                        this.pNoLocationAlert.Visible = true;
                 }
                 else
-                    this.lblNoTableAlert.Visible = true;
+                    this.pNoLocationAlert.Visible = true;
+
+                //Get and Display the data to the Repeaters
+                DataTable dish_types = this.oMenu.GET_DISH_TYPES();
+
+                this.rNavigation.DataSource = dish_types;
+                this.rNavigation.DataBind();
+
+                this.rMain.DataSource = dish_types;
+                this.rMain.DataBind();
             }
             else
-                this.lblNoTableAlert.Visible = true;
-                
-            //Get and Display the data to the Repeaters
-            this.rAppetizer.DataSource = oMenu.GET_LIST_DISH_WITH_TYPE(1);
-            this.rAppetizer.DataBind();
-
-            this.rSoup.DataSource = oMenu.GET_LIST_DISH_WITH_TYPE(2);
-            this.rSoup.DataBind();
-
-            this.rMainDish.DataSource = oMenu.GET_LIST_DISH_WITH_TYPE(3);
-            this.rMainDish.DataBind();
-
-            this.rRice.DataSource = oMenu.GET_LIST_DISH_WITH_TYPE(4);
-            this.rRice.DataBind();
-
-            this.rDesserts.DataSource = oMenu.GET_LIST_DISH_WITH_TYPE(5);
-            this.rDesserts.DataBind();
-
-            this.rBeverages.DataSource = oMenu.GET_LIST_DISH_WITH_TYPE(6);
-            this.rBeverages.DataBind();
+                this.pIsClosed.Visible = true;
+            
 
             if (!IsPostBack)
             {
@@ -74,6 +72,11 @@ namespace GraciaResto
                 total += decimal.Parse(row["Total"].ToString());
             }
             return total;
+        }
+
+        protected DataTable GET_DISH_WITH_TYPE(int type)
+        {
+            return oMenu.GET_LIST_DISH_WITH_TYPE(type);
         }
 
         private bool VALIDATE_LOCATION(string location)
@@ -251,10 +254,10 @@ namespace GraciaResto
                 if (!string.IsNullOrWhiteSpace(Session["Location"].ToString()))
                     Response.Redirect("OrderSummary.aspx");
                 else
-                    this.lblNoTableAlert.Visible = true;
+                    this.pNoLocationAlert.Visible = true;
             }
             else if(Session["Location"] == null)
-                this.lblNoTableAlert.Visible = true;
+                this.pNoLocationAlert.Visible = true;
         }
 
         protected void btnBack_Click(object sender, EventArgs e)

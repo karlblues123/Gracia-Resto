@@ -30,9 +30,7 @@ namespace GraciaResto
                             Response.Redirect("Menu.aspx?Location=" + Session["Location"].ToString());
                     }
                         
-
                 this.DISPLAY_ORDER();
-
             }
         }
 
@@ -94,7 +92,7 @@ namespace GraciaResto
                         order.Columns.Remove("Name");
 
                         //Insert the data to the database
-                        this.oTrans.INSERT_NEW_SALE(code, customer, total, 0.00m, date, "None", location, order, string.Empty);
+                        this.oTrans.INSERT_NEW_SALE(code, customer, total, 0.00m, date, "None", location, 0, 0, order, string.Empty);
 
                         //Insert the Sales Code to the Session
                         Session.Add("SalesCode", code);

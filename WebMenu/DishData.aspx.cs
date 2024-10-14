@@ -218,6 +218,7 @@ namespace GraciaResto
             this.UPLOAD_DISH_PHOTO();
 
             //Display the new dish data in the controls
+            this.hiddenSelectedDish.Value = dish_code;
             this.DISPLAY_SELECTED_DISH(dish_code);
 
             //Display a success toast

@@ -318,7 +318,12 @@ namespace GraciaResto
             else
             { _flgTableStatus = false; }
 
-            this.oMaster.UPDATE_TABLE_STATUS(this.txtCustomer.Text, this.txtNotes.Text, Convert.ToInt32(hfTableNumber.Value), _flgTableStatus, Request.Cookies["User"].Values["Username"].ToString());
+            int pax = 0;
+            int.TryParse(this.txtNumberOfGuest.Text, out pax);
+            if (pax == 0)
+                pax = 1;
+
+            this.oMaster.UPDATE_TABLE_STATUS(this.txtCustomer.Text, pax, this.txtNotes.Text, Convert.ToInt32(hfTableNumber.Value), _flgTableStatus, Request.Cookies["User"].Values["Username"].ToString());
 
 
 

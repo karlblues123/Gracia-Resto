@@ -13,6 +13,15 @@ namespace GraciaResto {
     public partial class Menu {
         
         /// <summary>
+        /// rNavigation control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rNavigation;
+        
+        /// <summary>
         /// pMenu control.
         /// </summary>
         /// <remarks>
@@ -22,67 +31,31 @@ namespace GraciaResto {
         protected global::System.Web.UI.WebControls.Panel pMenu;
         
         /// <summary>
-        /// rAppetizer control.
+        /// pNoLocationAlert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rAppetizer;
+        protected global::System.Web.UI.WebControls.Panel pNoLocationAlert;
         
         /// <summary>
-        /// rSoup control.
+        /// rMain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rSoup;
+        protected global::System.Web.UI.WebControls.Repeater rMain;
         
         /// <summary>
-        /// rMainDish control.
+        /// pIsClosed control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rMainDish;
-        
-        /// <summary>
-        /// rRice control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rRice;
-        
-        /// <summary>
-        /// rDesserts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rDesserts;
-        
-        /// <summary>
-        /// rBeverages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rBeverages;
-        
-        /// <summary>
-        /// lblNoTableAlert control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNoTableAlert;
+        protected global::System.Web.UI.WebControls.Panel pIsClosed;
         
         /// <summary>
         /// btnView control.
